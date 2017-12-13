@@ -1,7 +1,5 @@
 package it.tulchiar.autoscuola.model;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,91 +11,15 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
-import javafx.geometry.Dimension2D;
-
-
-
 public class Lettera {
 	
 	final static String PATH ="/Users/Marco/Desktop/Autoscuola/";
 	private String file;
 	private String path;
 	
-	public static void main(String[] args) {
-		Cliente c = new Cliente(1, "Chiarello", "Marco");
-		c.setIndirizzo("Via Guerra 15");
-		c.setCap("59100");
-		c.setLocalita("Prato");
-		c.setProvincia("PO");
-		c.setCellulare("349 0773441");
-		c.setEmail("tulchiar@gmail.com");
-		c.setNote("Annotazione inserita per appuntare qualcosa \nrelativo al cliente");
-		c.setTipoPatente("AB");
-		c.setDataScadenza(LocalDate.parse("2019-05-07"));
-		c.setDataInvioLettera(LocalDate.now());
-		
-		Lettera l = new Lettera();
-		l.creaLetteraPdf(PATH, "", c);
-	}
 	
 	public void creaLetteraScadenzaPatente(String path, String file, Cliente cliente) {
-		
-		//2017_01_01_Chiarello_Marco_lettera scadenza patente.odt
-		this.file = LocalDate.now().getYear() + "_" 
-				+ String.format("%02d",LocalDate.now().getMonthValue()) +"_"
-				+ String.format("%02d",LocalDate.now().getDayOfMonth()) + "_"
-				+ cliente.getCognome()+"_"+cliente.getNome()+"_lettera scadenza patente.html";  //file;
-		
-		this.path = PATH + this.file;
-	    
-		
-		String html = "<html><head>"
-		        +"<title>" + file + "</title>"
-		        +"</head>"
-		        +"<body>"
-		        +"<img src='/Logo.bmp'>"
-		        +"<p>" + cliente.getCognome() + " " + cliente.getNome() + "</p>"
-		        +"<p>" + cliente.getIndirizzo() + "</p>"
-		        +"<p>" + cliente.getCap() + " " + cliente.getLocalita() + " (" + cliente.getProvincia() +")</p>"
-		        +"<p></p>"
-		        +"<p>OGGETTO: SCADENZA PATENTE DI GUIDA</p>"
-		        +"<p></p>"
-		        +"<p>   Egregio Signore/a,</p>"	        
-		        +"<p>con la presente la informiamo che il giorno " + cliente.getDataScadenza().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-		        + " viene a scadere la sua patente di guida.</p>"	   
-		        +"<p></p>"
-		        +"<p>   E' opportuno pertanto che provveda in tempo utile al rinnovo della stessa, che potrà effettuare presso ill nostro ufficio,"
-		        + "presentandosi munito di patente, codice fiscale, 1 foto nei giorni in cui è a disposizione per i nostri clienti l'Ufficiale Sanitario"
-		        + "e cioè:</p>"
-		        +"<p></p>"
-		        +"<h2>LUNEDI' ORE 18.00</h2>"
-		        +"<p></p>"
-		        +"<p>e</p>"
-		        +"<p></p>"
-		        +"<h2>GIOVEDI' ORE 17.15</h2>"
-		        +"<p></p>"
-		        +"<p><b>Per appuntamento</b></p>"
-		        +"<p></p>"
-		        +"<p>Distinti saluti</p>"
-		        +"<p></p>"
-		        +"<p><c>AUTOSCUOLA LA QUERCE</c></p>"
-		        +"</body></html>";
-				
-	    try {
-	        File f = new File(this.path);
-	        FileWriter fw = new FileWriter(f);
-	        fw.write(html);
-	        
-	        fw.flush();
-	        fw.close();
-	    }
-	    catch(IOException e) {
-	        e.printStackTrace();
-	    }
-	}
 	
-	public void creaLetteraPdf(String path, String file, Cliente cliente) {
-		
 		//2017_01_01_Chiarello_Marco_lettera scadenza patente.odt
 		this.file = LocalDate.now().getYear() + "_" 
 				+ String.format("%02d",LocalDate.now().getMonthValue()) +"_"
@@ -116,8 +38,8 @@ public class Lettera {
 		      document.addPage(singlePage);
 		      final PDPageContentStream contentStream = new PDPageContentStream(document, singlePage);
 		     
-		      PDImageXObject pdImage = PDImageXObject.createFromFile("/Users/Marco/Desktop/Autoscuola/Logo.bmp", document);
-		      contentStream.drawImage(pdImage, 100, 600);
+		      PDImageXObject pdImage = PDImageXObject.createFromFile("/Users/Marco/Desktop/Autoscuola/Logo.gif", document);
+		      contentStream.drawImage(pdImage, 50, 600);
 		      
 		      contentStream.beginText();
 		      contentStream.setFont(timesRoman, fontSize);

@@ -71,7 +71,13 @@
                      <children>
                         <VBox alignment="CENTER" spacing="5.0">
                            <children>
-                              <HBox spacing="5.0">
+                              <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                 <children>
+                                    <Label text="Id" />
+                                    <TextField fx:id="txtId" editable="false" prefHeight="27.0" prefWidth="72.0" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" spacing="5.0">
                                  <children>
                                     <Label text="Cognome" />
                                     <TextField fx:id="txtCognome" prefHeight="27.0" prefWidth="209.0" />
@@ -79,13 +85,13 @@
                                     <TextField fx:id="txtNome" prefHeight="27.0" prefWidth="170.0" />
                                  </children>
                               </HBox>
-                              <HBox spacing="5.0">
+                              <HBox alignment="CENTER_LEFT" spacing="5.0">
                                  <children>
                                     <Label text="Indirizzo" />
                                     <TextField fx:id="txtIndirizzo" prefHeight="27.0" prefWidth="432.0" />
                                  </children>
                               </HBox>
-                              <HBox spacing="5.0">
+                              <HBox alignment="CENTER_LEFT" spacing="5.0">
                                  <children>
                                     <Label text="Cap" />
                                     <TextField fx:id="txtCap" prefHeight="27.0" prefWidth="66.0" />
@@ -95,7 +101,7 @@
                                     <TextField fx:id="txtProvincia" prefHeight="27.0" prefWidth="60.0" />
                                  </children>
                               </HBox>
-                              <HBox spacing="5.0">
+                              <HBox alignment="CENTER_LEFT" spacing="5.0">
                                  <children>
                                     <Label text="Tipo Patente" />
                                     <TextField fx:id="txtTipoPatente" prefHeight="27.0" prefWidth="117.0" />
@@ -106,7 +112,7 @@
                                     <Insets bottom="15.0" top="15.0" />
                                  </padding>
                               </HBox>
-                              <HBox spacing="5.0">
+                              <HBox alignment="CENTER_LEFT" spacing="5.0">
                                  <children>
                                     <Label text="Telefono" />
                                     <TextField fx:id="txtTelefono" />
@@ -114,7 +120,7 @@
                                     <TextField fx:id="txtCellulare" />
                                  </children>
                               </HBox>
-                              <HBox spacing="5.0">
+                              <HBox alignment="CENTER_LEFT" spacing="5.0">
                                  <children>
                                     <Label text="Email" />
                                     <TextField fx:id="txtEmail" prefHeight="27.0" prefWidth="214.0" />

@@ -8,8 +8,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import javax.swing.JOptionPane;
 
 import it.tulchiar.autoscuola.model.Cliente;
 import it.tulchiar.autoscuola.model.Lettera;
@@ -80,6 +83,9 @@ public class AutoscuolaController {
     @FXML // fx:id="txtDettagliCliente"
     private TextArea txtDettagliCliente; // Value injected by FXMLLoader
 
+    @FXML // fx:id="txtId"
+    private TextField txtId; // Value injected by FXMLLoader
+    
     @FXML // fx:id="txtCognome"
     private TextField txtCognome; // Value injected by FXMLLoader
 
@@ -244,9 +250,38 @@ public class AutoscuolaController {
 
     @FXML
     void doInserisci(ActionEvent event) {
-
+    		
+    		int id = -1;
+    		
+    		try {
+    			id = Integer.parseInt(txtId.getText());
+		} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Errore id non corretto.", "Erore formato id.", JOptionPane.ERROR_MESSAGE);
+		}
+	    
+    		if(id == -1) { //Aggiungo un nuovo cliente
+		    	String cognome = txtCognome.getText();
+		    	String nome = txtNome.getText();
+		    	String indirizzo = txtIndirizzo.getText();
+		    	String cap = txtCap.getText();
+		    	String localita = txtCap.getText();
+		    	String provincia = txtProvincia.getText();
+		    	String tipoPatente = txtTipoPatente.getText();
+		    	LocalDate dataScadenza = LocalDate.parse(txtDataScadenza.getText());
+		    	String telefono = txtTelefono.getText();
+		    	String cellulare = txtCellulare.getText();
+		    	String email = txtEmail.getText();
+		    	String note = txtNote.getText();
+		    	
+		    	Cliente nuovoCliente = new Cliente(id, cognome, nome, indirizzo, cap, localita, provincia, tipoPatente, dataScadenza, telefono, cellulare, email, note, null);
+		    	
+		    	if(model.add(nuovoCliente)) {
+		    		JOptionPane.showMessageDialog(null, "Il cliente è stato aggiunto correttamente!\n\n" + nuovoCliente.toString(), "Nuovo cliente inserito.", JOptionPane.INFORMATION_MESSAGE);
+		    }
+    		} else { //modifico il cliente con id = txtId
+    			JOptionPane.showMessageDialog(null, "Modifico il cliente con id: " + id , "Modifica cliente", JOptionPane.INFORMATION_MESSAGE);
+    		}
     }
-
     @FXML
     void doAnnulla(ActionEvent event) {
 
@@ -267,6 +302,7 @@ public class AutoscuolaController {
         assert colDataInvioLettera != null : "fx:id=\"colDataInvioLetteradataInvioLettera\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert txtDettagliCliente != null : "fx:id=\"txtDettagliCliente\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert txtCognome != null : "fx:id=\"txtCognome\" was not injected: check your FXML file 'Autoscuola.fxml'.";
+        assert txtId != null : "fx:id=\"txtId\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert txtNome != null : "fx:id=\"txtNome\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert txtIndirizzo != null : "fx:id=\"txtIndirizzo\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert txtCap != null : "fx:id=\"txtCap\" was not injected: check your FXML file 'Autoscuola.fxml'.";

@@ -34,4 +34,13 @@ public class Model {
 		public ArrayList<Cliente> searchScadenza(int mese, int anno) {
 			return dao.searchScadenza(mese, anno);
 		}
+		
+		/**
+		 * Aggiunge un nuovo cliente al database, richiede tutti i campi tranne 'dataInvioLettera'
+		 * @param cliente l'oggetto Cliente da inserire nel databse
+		 * @return True se l'inserimento è andato  abuon fine, False se fallito
+		 */
+		public boolean add(Cliente cliente) {
+			return dao.add(cliente);
+		}
 }
