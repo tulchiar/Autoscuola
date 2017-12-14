@@ -3,10 +3,18 @@ package it.tulchiar.autoscuola.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.JOptionPane;
 
 public class DB_common {
+
+	
+	private static final String pattern = "yyyy-MM-dd";
+	/**
+	 * DateTimeFormatter formatter da utilizzare epr impostare correttamente le date
+	 */
+	public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
 	
 	private static final String DB_CONNECTION_STRING = "jdbc:mysql://localhost/autoscuola?user=root&password=Chrmrc84a15";
 

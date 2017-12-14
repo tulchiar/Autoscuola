@@ -43,4 +43,15 @@ public class Model {
 		public boolean add(Cliente cliente) {
 			return dao.add(cliente);
 		}
+
+		/**
+		 * Cancella logicamente un cliente impostando la data nel campo cancellato del cliente
+		 * @param cliente il cliente da cancellare
+		 * @return true se la data di cancellazione è stata impostata correttamente, false se
+		 * qualcosa è andato storto
+		 */
+		public boolean delete(Cliente cliente) {
+			return dao.delete(cliente);
+		}
+
 }

@@ -4,15 +4,12 @@
 
 package it.tulchiar.autoscuola;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
 
 import it.tulchiar.autoscuola.model.Cliente;
 import it.tulchiar.autoscuola.model.Lettera;
@@ -23,12 +20,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.util.converter.LocalDateStringConverter;
 
 public class AutoscuolaController {
 	
@@ -46,7 +46,10 @@ public class AutoscuolaController {
 
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
-
+    
+    @FXML // fx:id="chkCreazioneLettere"
+    private CheckBox chkCreazioneLettere; // Value injected by FXMLLoader
+    
     @FXML // fx:id="txtAnno"
     private TextField txtAnno; // Value injected by FXMLLoader
 
@@ -125,21 +128,42 @@ public class AutoscuolaController {
     @FXML // fx:id="txtNote"
     private TextArea txtNote; // Value injected by FXMLLoader
 
-    @FXML // fx:id="btnInserisci"
-    private Button btnInserisci; // Value injected by FXMLLoader
+    @FXML // fx:id="btnInserisciModifica"
+    private Button btnInserisciModifica; // Value injected by FXMLLoader
 
     @FXML // fx:id="btnAnnulla"
     private Button btnAnnulla; // Value injected by FXMLLoader
 
+    @FXML // fx:id="btnCancella"
+    private Button btnCancella; // Value injected by FXMLLoader
+    
     @FXML
     void doMostraDettagli(MouseEvent event) {
     		ObservableList<Cliente> clientiSelezionati = tblClienti.getSelectionModel().getSelectedItems();
-    		String telefono = clientiSelezionati.get(0).getTelefono();
+    		
     		txtDettagliCliente.setText(clientiSelezionati.get(0).toString());
+    		Cliente cliente0 = clientiSelezionati.get(0);
     		
-    		Lettera l = new Lettera();
-    		l.creaLetteraScadenzaPatente("", "", clientiSelezionati.get(0));
-    		
+    		if(chkCreazioneLettere.isSelected()) {
+	    		Lettera l = new Lettera();
+	    		l.creaLetteraScadenzaPatente("", "", clientiSelezionati.get(0));
+    		} else {
+    			// Passo i parametri alla schermata di modifica
+    			txtId.setText( Integer.toString(cliente0.getId()));
+    			txtCognome.setText(cliente0.getCognome());
+			txtNome.setText(cliente0.getNome());
+			txtIndirizzo.setText(cliente0.getIndirizzo());
+			txtCap.setText(cliente0.getCap());
+			txtLocalita.setText(cliente0.getLocalita());
+			txtProvincia.setText(cliente0.getProvincia());
+			txtTipoPatente.setText(cliente0.getTipoPatente());
+			txtDataScadenza.setText(new LocalDateStringConverter(FormatStyle.SHORT).toString(cliente0.getDataScadenza()));
+			txtTelefono.setText(cliente0.getTelefono());
+			txtCellulare.setText(cliente0.getCellulare());
+			txtEmail.setText(cliente0.getEmail());
+			txtNote.setText(cliente0.getNote());
+			txtDataInvioLettera.setText(new LocalDateStringConverter(FormatStyle.SHORT).toString(cliente0.getDataInvioLettera()));
+    		}
     }
     
     /**
@@ -156,51 +180,32 @@ public class AutoscuolaController {
 		colDataInvioLettera.setCellValueFactory( new PropertyValueFactory<>("dataInvioLettera") );
 		
 		tblClienti.getItems().clear();
-    		
+    		ArrayList<Cliente> clienti;
     		if(!txtCognomeRicerca.getText().isEmpty()) {
-    			
+   
     			String cognome = txtCognomeRicerca.getText();
-    			ArrayList<Cliente> clienti = model.searchByCognome(cognome);
-    			
-    			for (Cliente cliente : clienti) {
-    				tblClienti.getItems().add( new Cliente(
-    						cliente.getId(), 
-    						cliente.getCognome(),
-    						cliente.getNome(),
-    						cliente.getIndirizzo(),
-    						cliente.getCap(),
-    						cliente.getLocalita(),
-    						cliente.getProvincia(),
-    						cliente.getTipoPatente(),
-    						cliente.getDataScadenza(),
-    						cliente.getTelefono(),
-    						cliente.getCellulare(),
-    						cliente.getEmail(),
-    						cliente.getNote(), 
-    						cliente.getDataInvioLettera() ) );		
-    			}
+    			clienti = model.searchByCognome(cognome);
     			
     		} else {
-    			
-    			ArrayList<Cliente> clienti = model.getAll();
-    			
-    			for (Cliente cliente : clienti) {
-    				tblClienti.getItems().add( new Cliente(
-    						cliente.getId(), 
-    						cliente.getCognome(),
-    						cliente.getNome(),
-    						cliente.getIndirizzo(),
-    						cliente.getCap(),
-    						cliente.getLocalita(),
-    						cliente.getProvincia(),
-    						cliente.getTipoPatente(),
-    						cliente.getDataScadenza(),
-    						cliente.getTelefono(),
-    						cliente.getCellulare(),
-    						cliente.getEmail(),
-    						cliente.getNote(), 
-    						cliente.getDataInvioLettera() ) );		
-			}
+    			clienti = model.getAll();
+		}
+    		
+    		for (Cliente cliente : clienti) {
+				tblClienti.getItems().add( new Cliente(
+						cliente.getId(), 
+						cliente.getCognome(),
+						cliente.getNome(),
+						cliente.getIndirizzo(),
+						cliente.getCap(),
+						cliente.getLocalita(),
+						cliente.getProvincia(),
+						cliente.getTipoPatente(),
+						cliente.getDataScadenza(),
+						cliente.getTelefono(),
+						cliente.getCellulare(),
+						cliente.getEmail(),
+						cliente.getNote(), 
+						cliente.getDataInvioLettera() ) );		
     		}   		
     }
     
@@ -249,15 +254,18 @@ public class AutoscuolaController {
     }
 
     @FXML
-    void doInserisci(ActionEvent event) {
+    void doInserisciModifica(ActionEvent event) {
     		
     		int id = -1;
     		
     		try {
     			id = Integer.parseInt(txtId.getText());
 		} catch (NumberFormatException e) {
-				JOptionPane.showMessageDialog(null, "Errore id non corretto.", "Erore formato id.", JOptionPane.ERROR_MESSAGE);
+			id = -1;				
 		}
+    		
+    		Alert a1 = new Alert(AlertType.INFORMATION, "Id: " + id, ButtonType.OK);
+    		a1.showAndWait();
 	    
     		if(id == -1) { //Aggiungo un nuovo cliente
 		    	String cognome = txtCognome.getText();
@@ -267,7 +275,19 @@ public class AutoscuolaController {
 		    	String localita = txtCap.getText();
 		    	String provincia = txtProvincia.getText();
 		    	String tipoPatente = txtTipoPatente.getText();
-		    	LocalDate dataScadenza = LocalDate.parse(txtDataScadenza.getText());
+		    	
+		    	LocalDate dataScadenza = null;
+		    	try {
+		    		dataScadenza = LocalDate.parse(txtDataScadenza.getText());
+		    	} catch(DateTimeParseException e) {
+		    		Alert alert = new Alert(AlertType.ERROR);
+		    		alert.setTitle("Formato data errato");
+		    		alert.setHeaderText("Formato data errato");
+		    		alert.setContentText("La data inserita non è nel formato corretto\\n\\n 2017-12-31");
+		    		alert.showAndWait();
+		    		return;
+		    	}
+		    	
 		    	String telefono = txtTelefono.getText();
 		    	String cellulare = txtCellulare.getText();
 		    	String email = txtEmail.getText();
@@ -276,19 +296,64 @@ public class AutoscuolaController {
 		    	Cliente nuovoCliente = new Cliente(id, cognome, nome, indirizzo, cap, localita, provincia, tipoPatente, dataScadenza, telefono, cellulare, email, note, null);
 		    	
 		    	if(model.add(nuovoCliente)) {
-		    		JOptionPane.showMessageDialog(null, "Il cliente è stato aggiunto correttamente!\n\n" + nuovoCliente.toString(), "Nuovo cliente inserito.", JOptionPane.INFORMATION_MESSAGE);
+		    		Alert alert = new Alert(AlertType.INFORMATION);
+		    		alert.setTitle("Nuovo cliente inserito correttamente.");
+		    		alert.setHeaderText("");
+		    		alert.setContentText("Il cliente è stato aggiunto correttamente!\n\n" + nuovoCliente.toString());
+		    		alert.showAndWait();
+		    		return;
 		    }
     		} else { //modifico il cliente con id = txtId
-    			JOptionPane.showMessageDialog(null, "Modifico il cliente con id: " + id , "Modifica cliente", JOptionPane.INFORMATION_MESSAGE);
+    			Alert alert = new Alert(AlertType.INFORMATION);
+	    		alert.setTitle("Modifica cliente");
+	    		alert.setHeaderText("");
+	    		alert.setContentText("Modifico il cliente con id: " + id);
+	    		alert.showAndWait();
+	    		return;
     		}
     }
+    
     @FXML
     void doAnnulla(ActionEvent event) {
-
+    		resetPannelloAggiungiModifica();
+    }
+    
+    @FXML
+    void doCancella(ActionEvent event) {
+    		int id = Integer.parseInt(txtId.getText());
+    		Cliente cliente = new Cliente(id,null,null);
+    		if(model.delete(cliente)) {
+    			resetPannelloAggiungiModifica();
+    			Alert alert = new Alert(AlertType.INFORMATION, "Cancellazione avvenuta con successo.\n "
+    					+ "(in caso di necessità il record è recuperabile)", ButtonType.OK);
+    			alert.showAndWait();
+    			return;
+    		}
+    		
+    }
+    
+    
+    private void resetPannelloAggiungiModifica() {
+    	// Passo i parametri alla schermata di modifica
+		txtId.setText( "-1" );
+		txtCognome.setText( "" );
+		txtNome.setText( "" );
+		txtIndirizzo.setText( "" );
+		txtCap.setText( "" );
+		txtLocalita.setText( "" );
+		txtProvincia.setText( "" );
+		txtTipoPatente.setText( "" );
+		txtDataScadenza.setText( "" );
+		txtTelefono.setText( "" );
+		txtCellulare.setText( "" );
+		txtEmail.setText( "" );
+		txtNote.setText( "" );
+		txtDataInvioLettera.setText( "" );
     }
     
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
+        assert chkCreazioneLettere != null : "fx:id=\"chkCreazioneLettere\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert txtAnno != null : "fx:id=\"txtAnno\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert txtCognomeRicerca != null : "fx:id=\"txtCognomeRicerca\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert txtMese != null : "fx:id=\"txtMese\" was not injected: check your FXML file 'Autoscuola.fxml'.";
@@ -315,8 +380,9 @@ public class AutoscuolaController {
         assert txtEmail != null : "fx:id=\"txtEmail\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert txtDataInvioLettera != null : "fx:id=\"txtDataInvioLettera\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert txtNote != null : "fx:id=\"txtNote\" was not injected: check your FXML file 'Autoscuola.fxml'.";
-        assert btnInserisci != null : "fx:id=\"btnInserisci\" was not injected: check your FXML file 'Autoscuola.fxml'.";
+        assert btnInserisciModifica != null : "fx:id=\"btnInserisciModifica\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert btnAnnulla != null : "fx:id=\"btnAnnulla\" was not injected: check your FXML file 'Autoscuola.fxml'.";
+        assert btnCancella != null : "fx:id=\"btnCancella\" was not injected: check your FXML file 'Autoscuola.fxml'.";
 
     }
 }

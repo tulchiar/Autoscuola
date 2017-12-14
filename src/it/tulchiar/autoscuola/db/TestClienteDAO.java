@@ -1,8 +1,6 @@
 package it.tulchiar.autoscuola.db;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 import it.tulchiar.autoscuola.model.Cliente;
 
@@ -27,7 +25,7 @@ public class TestClienteDAO {
 //			}
 //		}
 		
-		Cliente c = new Cliente(1, "Riprova DAO", "Marco");
+		Cliente c = new Cliente(1056, "Riprova DAO", "Marco");
 		c.setIndirizzo("Via Guerra 15");
 		c.setCap("59100");
 		c.setLocalita("Prato");
@@ -36,9 +34,10 @@ public class TestClienteDAO {
 		c.setEmail("tulchiar@gmail.com");
 		c.setNote("Annotazione inserita per appuntare qualcosa \nrelativo al cliente");
 		c.setTipoPatente("AB");
-		c.setDataScadenza(LocalDate.parse("212-12-2017"));
+		c.setDataScadenza(LocalDate.parse("2017-12-01", DB_common.formatter));
 		
-		System.out.print(dao.add(c));
-		
+		//System.out.print(dao.add(c));
+		//System.out.println(dao.delete(c));
+		System.out.println(dao.update(c));
 	}
 }

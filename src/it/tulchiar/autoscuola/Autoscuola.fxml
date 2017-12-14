@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -46,6 +47,7 @@
                               <TextField fx:id="txtAnno" prefWidth="75.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                               <Button fx:id="btnCercaMeseAnno" mnemonicParsing="false" onAction="#doCercaMeseAnno" text="Cerca" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                               <Button fx:id="btnCercaCognome" mnemonicParsing="false" onAction="#doCercaCognome" text="Cerca" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <CheckBox fx:id="chkCreazioneLettere" mnemonicParsing="false" text="Creazione Lettere" GridPane.columnIndex="4" />
                            </children>
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -69,81 +71,99 @@
               <content>
                 <AnchorPane>
                      <children>
-                        <VBox alignment="CENTER" spacing="5.0">
-                           <children>
-                              <HBox alignment="CENTER_LEFT" spacing="5.0">
+                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                           <right>
+                              <VBox prefHeight="200.0" prefWidth="100.0" spacing="15.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Label text="Id" />
-                                    <TextField fx:id="txtId" editable="false" prefHeight="27.0" prefWidth="72.0" />
+                                    <Button fx:id="btnInserisciModifica" mnemonicParsing="false" onAction="#doInserisciModifica" text="Salva" />
+                                    <Button fx:id="btnAnnulla" mnemonicParsing="false" onAction="#doAnnulla" text="Annulla/Resetta" />
+                                    <Button fx:id="btnCancella" mnemonicParsing="false" onAction="#doCancella" text="Cancella" />
                                  </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                 <BorderPane.margin>
+                                    <Insets top="15.0" />
+                                 </BorderPane.margin>
+                              </VBox>
+                           </right>
+                           <center>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Label text="Cognome" />
-                                    <TextField fx:id="txtCognome" prefHeight="27.0" prefWidth="209.0" />
-                                    <Label text="Nome" />
-                                    <TextField fx:id="txtNome" prefHeight="27.0" prefWidth="170.0" />
+                                    <VBox alignment="CENTER" spacing="5.0">
+                                       <children>
+                                          <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                             <children>
+                                                <Label text="Id" />
+                                                <TextField fx:id="txtId" editable="false" prefHeight="27.0" prefWidth="72.0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                             <children>
+                                                <Label text="Cognome" />
+                                                <TextField fx:id="txtCognome" prefHeight="27.0" prefWidth="209.0" />
+                                                <Label text="Nome" />
+                                                <TextField fx:id="txtNome" prefHeight="27.0" prefWidth="170.0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                             <children>
+                                                <Label text="Indirizzo" />
+                                                <TextField fx:id="txtIndirizzo" prefHeight="27.0" prefWidth="432.0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                             <children>
+                                                <Label text="Cap" />
+                                                <TextField fx:id="txtCap" prefHeight="27.0" prefWidth="66.0" />
+                                                <Label text="Località" />
+                                                <TextField fx:id="txtLocalita" prefHeight="27.0" prefWidth="210.0" />
+                                                <Label text="Provincia" />
+                                                <TextField fx:id="txtProvincia" prefHeight="27.0" prefWidth="60.0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                             <children>
+                                                <Label text="Tipo Patente" />
+                                                <TextField fx:id="txtTipoPatente" prefHeight="27.0" prefWidth="117.0" />
+                                                <Label text="Data Scadenza" />
+                                                <TextField fx:id="txtDataScadenza" prefHeight="27.0" prefWidth="118.0" />
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="15.0" top="15.0" />
+                                             </padding>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                             <children>
+                                                <Label text="Telefono" />
+                                                <TextField fx:id="txtTelefono" />
+                                                <Label text="Cellulare" />
+                                                <TextField fx:id="txtCellulare" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                             <children>
+                                                <Label text="Email" />
+                                                <TextField fx:id="txtEmail" prefHeight="27.0" prefWidth="214.0" />
+                                                <Label text="Data Invio Lettera" />
+                                                <TextField fx:id="txtDataInvioLettera" prefHeight="27.0" prefWidth="119.0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox spacing="5.0">
+                                             <children>
+                                                <Label text="Note" />
+                                                <TextArea fx:id="txtNote" prefHeight="169.0" prefWidth="457.0" />
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="15.0" top="15.0" />
+                                             </padding>
+                                          </HBox>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                       </padding>
+                                    </VBox>
                                  </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" spacing="5.0">
-                                 <children>
-                                    <Label text="Indirizzo" />
-                                    <TextField fx:id="txtIndirizzo" prefHeight="27.0" prefWidth="432.0" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" spacing="5.0">
-                                 <children>
-                                    <Label text="Cap" />
-                                    <TextField fx:id="txtCap" prefHeight="27.0" prefWidth="66.0" />
-                                    <Label text="Località" />
-                                    <TextField fx:id="txtLocalita" prefHeight="27.0" prefWidth="210.0" />
-                                    <Label text="Provincia" />
-                                    <TextField fx:id="txtProvincia" prefHeight="27.0" prefWidth="60.0" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" spacing="5.0">
-                                 <children>
-                                    <Label text="Tipo Patente" />
-                                    <TextField fx:id="txtTipoPatente" prefHeight="27.0" prefWidth="117.0" />
-                                    <Label text="Data Scadenza" />
-                                    <TextField fx:id="txtDataScadenza" prefHeight="27.0" prefWidth="118.0" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="15.0" top="15.0" />
-                                 </padding>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" spacing="5.0">
-                                 <children>
-                                    <Label text="Telefono" />
-                                    <TextField fx:id="txtTelefono" />
-                                    <Label text="Cellulare" />
-                                    <TextField fx:id="txtCellulare" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" spacing="5.0">
-                                 <children>
-                                    <Label text="Email" />
-                                    <TextField fx:id="txtEmail" prefHeight="27.0" prefWidth="214.0" />
-                                    <Label text="Data Invio Lettera" />
-                                    <TextField fx:id="txtDataInvioLettera" prefHeight="27.0" prefWidth="119.0" />
-                                 </children>
-                              </HBox>
-                              <HBox spacing="5.0">
-                                 <children>
-                                    <Label text="Note" />
-                                    <TextArea fx:id="txtNote" prefHeight="169.0" prefWidth="457.0" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="15.0" top="15.0" />
-                                 </padding>
-                              </HBox>
-                              <Button fx:id="btnInserisci" mnemonicParsing="false" onAction="#doInserisci" text="Salva" />
-                              <Button fx:id="btnAnnulla" mnemonicParsing="false" onAction="#doAnnulla" text="Annulla" />
-                           </children>
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                           </padding>
-                        </VBox>
+                              </AnchorPane>
+                           </center>
+                        </BorderPane>
                      </children>
                   </AnchorPane>
               </content>

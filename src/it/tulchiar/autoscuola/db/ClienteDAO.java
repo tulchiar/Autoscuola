@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLData;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import it.tulchiar.autoscuola.model.Cliente;
-import javafx.util.converter.LocalDateStringConverter;
 
 public class ClienteDAO {
 	
@@ -205,22 +203,75 @@ public class ClienteDAO {
 	}
 
 	
-/**
- * Aggiunge un nuovo cliente al database, richiede tutti i campi tranne 'dataInvioLettera'
- * @param cliente l'oggetto Cliente da inserire nel databse
- * @return True se l'inserimento è andato  abuon fine, False se fallito
- */
-public boolean add(Cliente cliente) {
+	/**
+	 * Aggiunge un nuovo cliente al database, richiede tutti i campi tranne 'dataInvioLettera'
+	 * @param cliente l'oggetto Cliente da inserire nel databse
+	 * @return True se l'inserimento è andato  abuon fine, False se fallito
+	 */
+	public boolean add(Cliente cliente) {
+		
+		String sql = "INSERT INTO `autoscuola`.`clienti` (`cognome`, `nome`, `indirizzo`, `cap`, `localita`, `provincia`,"
+					+ " `tipoPatente`, `dataScadenza`, `telefono`, `cellulare`, `email`, `note`)"
+					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	
-	String sql = "INSERT INTO `autoscuola`.`clienti` (`cognome`, `nome`, `indirizzo`, `cap`, `localita`, `provincia`,"
-				+ " `tipoPatente`, `dataScadenza`, `telefono`, `cellulare`, `email`, `note`)"
-				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-
+			Connection conn = DB_common.getConnection();
+	
+			try {
+				PreparedStatement ps = conn.prepareStatement(sql);
+				
+				ps.setString(1, cliente.getCognome());
+				ps.setString(2, cliente.getNome());
+				ps.setString(3, cliente.getIndirizzo());
+				ps.setString(4, cliente.getCap());
+				ps.setString(5, cliente.getLocalita());
+				ps.setString(6, cliente.getProvincia());
+				ps.setString(7, cliente.getTipoPatente());
+				ps.setDate(8, Date.valueOf(cliente.getDataScadenza()));
+				ps.setString(9, cliente.getTelefono());		
+				ps.setString(10, cliente.getCellulare());
+				ps.setString(11, cliente.getEmail());
+				ps.setString(12, cliente.getNote());
+				
+				if (ps.executeUpdate() > 0) {
+					conn.close();
+					return true;
+				} else {
+					conn.close();
+					throw(new SQLException());
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Errore durante l'nserimento del record nel database."
+						+ "Verificare i dati e riprovare.", "Errore creazione record nel Database", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}	
+		}
+	
+	public boolean update(Cliente cliente) {
+		String sql = "UPDATE `autoscuola`.`clienti`\n" + 
+				"SET " +  
+				"`cognome` = ?, " + 
+				"`nome` = ?, " + 
+				"`indirizzo` = ?, " + 
+				"`cap` = ?, " + 
+				"`localita` = ?, " + 
+				"`provincia` = ?, " + 
+				"`tipoPatente` = ?, " + 
+				"`dataScadenza` = ?, " + 
+				"`telefono` = ?, " + 
+				"`cellulare` = ?, " + 
+				"`email` = ?, " + 
+				"`note` = ?, " + 
+				"`dataInvioLettera` = ? " + 
+				"WHERE `id` = ? ;";
+		
 		Connection conn = DB_common.getConnection();
-
+		
+		PreparedStatement ps;
 		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
-			
+			ps = conn.prepareStatement(sql);
+
 			ps.setString(1, cliente.getCognome());
 			ps.setString(2, cliente.getNome());
 			ps.setString(3, cliente.getIndirizzo());
@@ -233,21 +284,58 @@ public boolean add(Cliente cliente) {
 			ps.setString(10, cliente.getCellulare());
 			ps.setString(11, cliente.getEmail());
 			ps.setString(12, cliente.getNote());
+			ps.setDate(13, Date.valueOf(cliente.getDataScadenza()));
+			ps.setInt(14, cliente.getId());
 			
-			if (ps.executeUpdate() > 0) {
-				conn.close();
+			int result = ps.executeUpdate();
+			conn.close();
+			
+			if(result == 1) {
 				return true;
 			} else {
-				conn.close();
-				throw(new SQLException());
+				return false;
 			}
 			
 		} catch (SQLException e) {
+			System.out.println("Errore aggiornamento cliente in ClienteDAO.update");		
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Errore durante l'nserimento del record nel database."
-					+ "Verificare i dati e riprovare.", "Errore creazione record nel Database", JOptionPane.ERROR_MESSAGE);
 			return false;
-		}	
+		}
+		
 	}
 
+	/**
+	 * Cancella logicamente un cliente impostando la data nel campo cancellato del cliente
+	 * @param cliente il cliente da cancellare
+	 * @return true se la data di cancellazione è stata impostata correttamente, false se
+	 * qualcosa è andato storto
+	 */
+	public boolean delete(Cliente cliente) {
+		
+		String sql = "UPDATE `autoscuola`.`clienti` SET `cancellato`=? WHERE `id`=?";
+		
+		Connection conn = DB_common.getConnection();
+		
+		PreparedStatement ps;
+		try {
+
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, LocalDate.now().format(DB_common.formatter));
+			ps.setInt(2, cliente.getId());
+			
+			int result = ps.executeUpdate();
+			conn.close();
+			
+			if(result == 1) {
+				return true;
+			} else {
+				return false;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Errore eliminazione cliente in ClienteDAO.delete");
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
