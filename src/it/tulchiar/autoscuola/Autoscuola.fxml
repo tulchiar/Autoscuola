@@ -75,7 +75,7 @@
                            <right>
                               <VBox prefHeight="200.0" prefWidth="100.0" spacing="15.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Button fx:id="btnInserisciModifica" mnemonicParsing="false" onAction="#doInserisciModifica" text="Salva" />
+                                    <Button fx:id="btnSalva" mnemonicParsing="false" onAction="#doSalva" text="Salva" />
                                     <Button fx:id="btnAnnulla" mnemonicParsing="false" onAction="#doAnnulla" text="Annulla/Resetta" />
                                     <Button fx:id="btnCancella" mnemonicParsing="false" onAction="#doCancella" text="Cancella" />
                                  </children>

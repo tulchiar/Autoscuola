@@ -206,7 +206,7 @@ public class ClienteDAO {
 	/**
 	 * Aggiunge un nuovo cliente al database, richiede tutti i campi tranne 'dataInvioLettera'
 	 * @param cliente l'oggetto Cliente da inserire nel databse
-	 * @return True se l'inserimento è andato  abuon fine, False se fallito
+	 * @return True se l'inserimento è andato a buon fine, False se fallito
 	 */
 	public boolean add(Cliente cliente) {
 		
@@ -248,6 +248,11 @@ public class ClienteDAO {
 			}	
 		}
 	
+	/**
+	 * Modifica i dati del cliente nel database, richiede tutti i campi tranne 'dataInvioLettera'
+	 * @param cliente l'oggetto Cliente da inserire nel databse
+	 * @return True se la modifica è andata a buon fine, False se fallita
+	 */
 	public boolean update(Cliente cliente) {
 		String sql = "UPDATE `autoscuola`.`clienti`\n" + 
 				"SET " +  

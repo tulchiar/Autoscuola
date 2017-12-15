@@ -38,12 +38,22 @@ public class Model {
 		/**
 		 * Aggiunge un nuovo cliente al database, richiede tutti i campi tranne 'dataInvioLettera'
 		 * @param cliente l'oggetto Cliente da inserire nel databse
-		 * @return True se l'inserimento è andato  abuon fine, False se fallito
+		 * @return True se l'inserimento è andato a buon fine, False se fallito
 		 */
 		public boolean add(Cliente cliente) {
 			return dao.add(cliente);
 		}
 
+		/**
+		 * Modifica i dati del cliente nel database, richiede tutti i campi tranne 'dataInvioLettera'
+		 * @param cliente l'oggetto Cliente da inserire nel databse
+		 * @return True se la modifica è andata a buon fine, False se fallita
+		 */
+		public boolean update(Cliente cliente) {
+			return dao.update(cliente);
+		}
+		
+		
 		/**
 		 * Cancella logicamente un cliente impostando la data nel campo cancellato del cliente
 		 * @param cliente il cliente da cancellare
