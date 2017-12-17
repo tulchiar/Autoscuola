@@ -1,7 +1,7 @@
 package it.tulchiar.autoscuola;
 
+import java.awt.event.FocusEvent;
 import java.net.URL;
-import java.text.Format;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.time.format.FormatStyle;
@@ -9,17 +9,19 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import org.controlsfx.validation.Severity;
+import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 
 import it.tulchiar.autoscuola.db.DB_common;
+import it.tulchiar.autoscuola.db.InputValidation;
 import it.tulchiar.autoscuola.model.Cliente;
 import it.tulchiar.autoscuola.model.Lettera;
 import it.tulchiar.autoscuola.model.Model;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -142,10 +144,6 @@ public class AutoscuolaController {
     @FXML // fx:id="btnCancella"
     private Button btnCancella; // Value injected by FXMLLoader
 
-//TODO impostare come default i btn cerca quando si editano le stringhe di ricerca
-//TODO sistemare le lettere generate
-//TODO sistemare l'inserimento e la modifica delle date
-    
     @FXML
     void doMostraDettagli(MouseEvent event) {
     		ObservableList<Cliente> clientiSelezionati = tblClienti.getSelectionModel().getSelectedItems();
@@ -220,6 +218,16 @@ public class AutoscuolaController {
     
     @FXML
     void doCercaMeseAnno(ActionEvent event) {
+//TODO controllare con la data 1/2018 va in errore    		
+    		if(txtMese.getText().isEmpty() || !txtMese.getText().chars().allMatch( Character::isDigit ) 
+    				|| txtAnno.getText().isEmpty() || !txtAnno.getText().chars().allMatch( Character::isDigit )) {
+    			Alert alert = new Alert(AlertType.ERROR);
+    			alert.setTitle("Errore inserimento data");
+    			alert.setHeaderText("Errore inserimento Mese o Anno!");
+    			alert.setContentText("Non hai inserito corretamente la data, verifica e riprova.");
+    				alert.show();
+    			return;
+    		}
     		
     		int mese = Integer.parseInt(txtMese.getText());
     		int anno = Integer.parseInt(txtAnno.getText());
@@ -267,7 +275,7 @@ public class AutoscuolaController {
 	    	String nome = txtNome.getText();
 	    	String indirizzo = txtIndirizzo.getText();
 	    	String cap = txtCap.getText();
-	    	String localita = txtLocalita.getText();
+	    	String localita = txtCap.getText();
 	    	String provincia = txtProvincia.getText();
 	    	String tipoPatente = txtTipoPatente.getText();
     		
@@ -357,7 +365,8 @@ public class AutoscuolaController {
     		});	
     	
     }
-     
+    
+    
     private void resetPannelloAggiungiModifica() {
     	// Passo i parametri alla schermata di modifica
 		txtId.setText( "-1" );
@@ -376,84 +385,27 @@ public class AutoscuolaController {
 		txtDataInvioLettera.setText( "" );
 		
     }
-    	
-    private boolean validationCognomeRicerca() {
-    	
-    		ValidationSupport validationSupport = new ValidationSupport();
-    		validationSupport.registerValidator(txtCognomeRicerca, false, Validator.createRegexValidator("Cognome non iserito", "(([A-Za-z]?+\\s?)+)?", Severity.ERROR));
-    		
-    		validationSupport.invalidProperty().addListener(new ChangeListener<Boolean>() {
-
-				@Override
-				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-					if(validationSupport.isInvalid()) {
-						btnCercaCognome.setDisable(true);
-					} else {
-						btnCercaCognome.setDisable(false);
-					}				
-				}
-			});
-    	
-    		return false;
-    }
     
-    private boolean validationDataRicerca() {
-       	
-    		ValidationSupport validationSupport = new ValidationSupport();
-		validationSupport.registerValidator(txtMese, false, Validator.createRegexValidator("Mese non valido", "([0][0-9])|([1][1-2])", Severity.ERROR));
-		validationSupport.registerValidator(txtAnno, false, Validator.createRegexValidator("Anno non valido (1990-2059)", "([1][9][9][0-9]|[2][0][0-5][0-9])", Severity.ERROR));
-	
-		validationSupport.invalidProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if(validationSupport.isInvalid()) {
-					btnCercaMeseAnno.setDisable(true);
-				} else {
-					btnCercaMeseAnno.setDisable(false);
-				}
-			}			
-		});
-		
-		return false;   	
-    }
-    
-    	private boolean validation() {
-    	
-    		ValidationSupport validationSupport = new ValidationSupport();
-    		validationSupport.registerValidator(txtCognome, true, Validator.createRegexValidator("Cognome non inserito", "([A-Z]([a-z]?+)+\\s?)+", Severity.ERROR));
-    		validationSupport.registerValidator(txtNome, true, Validator.createRegexValidator("Nome non inserito", "([A-Z]([a-z]?+)+\\s?)+", Severity.ERROR));
-    		validationSupport.registerValidator(txtIndirizzo, false, Validator.createRegexValidator("Indirizzo non inserito correttamente", "(^[A-Z][A-Za-z0-9\\s.]+)?", Severity.ERROR));
-    		validationSupport.registerValidator(txtCap, false, Validator.createRegexValidator("Cap non corretto", "^([0-9]{5})?$", Severity.ERROR));
-    		validationSupport.registerValidator(txtLocalita, false, Validator.createRegexValidator("Località non inserita correttamente", "(([A-Z]([a-z]?+)+\\s?)+)?", Severity.ERROR));
-    		validationSupport.registerValidator(txtProvincia, false, Validator.createRegexValidator("Provincia non inserita correttamente Es. PO", "([A-Z][A-Z])?", Severity.ERROR));
-    		validationSupport.registerValidator(txtTipoPatente, false, Validator.createRegexValidator("Tipo patente non inserita correttamente", "(([A-Z][A-Z]?[0-9]?\\s?)+)?", Severity.ERROR));
-    		validationSupport.registerValidator(txtTelefono, false, Validator.createRegexValidator("Solo numeri ammessi", "(([0-9]?\\s?)+)?", Severity.ERROR));
-    		validationSupport.registerValidator(txtCellulare, false, Validator.createRegexValidator("Solo numeri ammessi", "(([0-9]?\\s?)+)?", Severity.ERROR));
-    		validationSupport.registerValidator(txtEmail, false, Validator.createRegexValidator("Indirizzo eMail non valido", "(^[a-z0-9_]+@[a-z0-9-]+[.][a-z0-9-.]+)?", Severity.ERROR));
+    private void validation() {
     		
-    		validationSupport.invalidProperty().addListener(new ChangeListener<Boolean>() {
-
-				@Override
-				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-					if(validationSupport.isInvalid()) {
-						btnSalva.setDisable(true);
-					} else {
-						btnSalva.setDisable(false);
-					}
-				}				
+    	
+    	
+    		txtCap.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+    			public void handle(ActionEvent e) {
+    				System.out.println("Il cap è valido: " + InputValidation.isCap(txtCap));
+    				
+    			}    		
     		});
-   	
-    		System.out.println(validationSupport.getValidationResult());    
-    		return false;   	
+		
+		
     }
+
     
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
     		
-    		validationCognomeRicerca();
-    		validationDataRicerca();
     		validation();
-    		
+    	
     		assert chkCreazioneLettere != null : "fx:id=\"chkCreazioneLettere\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert txtAnno != null : "fx:id=\"txtAnno\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert txtCognomeRicerca != null : "fx:id=\"txtCognomeRicerca\" was not injected: check your FXML file 'Autoscuola.fxml'.";

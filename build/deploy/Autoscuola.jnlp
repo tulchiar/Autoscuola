@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="Autoscuola.jnlp">
+  <information>
+    <title>Autoscuola</title>
+    <vendor>it.tulchiar</vendor>
+    <description>Autoscuola</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="Autoscuola.jar" size="21397" download="eager" />
+    <jar href="libs/commons-logging-1.2.jar" size="61829" download="eager" />
+    <jar href="libs/controlsfx-8.40.14.jar" size="1215643" download="eager" />
+    <jar href="libs/fontbox-2.0.8.jar" size="1483772" download="eager" />
+    <jar href="libs/mysql-connector-java-5.1.45-bin.jar" size="999810" download="eager" />
+    <jar href="libs/pdfbox-2.0.8.jar" size="2485070" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="0" height="0" main-class="it.tulchiar.autoscuola.Main"  name="Autoscuola" />
+  <update check="background"/>
+</jnlp>
