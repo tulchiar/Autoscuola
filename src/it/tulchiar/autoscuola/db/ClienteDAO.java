@@ -151,14 +151,11 @@ public class ClienteDAO {
 		Connection conn = DB_common.getConnection();
 		
 		try {
-			
-			LocalDate data = LocalDate.parse(_anno+"-"+_mese+"-01");
-			
+			String meseString = String.format("%02d", _mese);
+			LocalDate data = LocalDate.parse(_anno+"-"+meseString+"-01");
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, data.format(DateTimeFormatter.ofPattern("yyyyMMdd")));
 			ps.setString(2, data.plusMonths(1).format(DateTimeFormatter.ofPattern("yyyyMMdd")));
-			
-			
 			
 			ResultSet rs = ps.executeQuery();
 			
@@ -197,8 +194,8 @@ public class ClienteDAO {
 			e.printStackTrace();
 			return null;
 		} catch (DateTimeParseException e) {
-			JOptionPane.showMessageDialog(null, "La data inserita non è valida!");
-			return null;
+			System.out.println("searchScadenza(int _mese, int _anno) - data non valida");
+			return clienti;
 		}
 	}
 
