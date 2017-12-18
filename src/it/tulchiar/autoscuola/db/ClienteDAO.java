@@ -109,7 +109,6 @@ public class ClienteDAO {
 				String email = rs.getString("email");
 				String note = rs.getString("note");
 				
-				//TODO Sistemare data invio lettera
 				LocalDate dataInvioLettera;
 				if(rs.getDate("dataInvioLettera") == null) {
 					dataInvioLettera = LocalDate.MIN;
@@ -174,7 +173,6 @@ public class ClienteDAO {
 				String email = rs.getString("email");
 				String note = rs.getString("note");
 				
-				//TODO Sistemare data invio lettera
 				LocalDate dataInvioLettera;
 				if(rs.getDate("dataInvioLettera") == null) {
 					dataInvioLettera = LocalDate.MIN;

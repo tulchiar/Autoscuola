@@ -280,7 +280,7 @@ public class AutoscuolaController {
 	    		dataScadenza = LocalDate.parse(txtDataScadenza.getText(), DB_common.formatter);
 	    	
 	    	} catch(DateTimeParseException e) {
-	    		Alert alert = new Alert(AlertType.ERROR, "La data di scadenza inserita non è nel formato corretto\n\n 2017-12-31", ButtonType.OK);
+	    		Alert alert = new Alert(AlertType.ERROR, "La data di scadenza inserita non è nel formato corretto\n\n 31/12/2017", ButtonType.OK);
 	    		alert.setTitle("Formato data errato");
 	    		alert.setHeaderText("Formato data errato");
 	    		alert.showAndWait();
@@ -296,7 +296,7 @@ public class AutoscuolaController {
 	    	try {
 	    		dataInvioLettera = LocalDate.parse(txtDataInvioLettera.getText(), DB_common.formatter);
 	    	} catch(DateTimeParseException e) {
-	    		Alert alert = new Alert(AlertType.ERROR, "La data di invio lettera inserita non è nel formato corretto\n\n 2017-12-31", ButtonType.OK);
+	    		Alert alert = new Alert(AlertType.ERROR, "La data di invio lettera inserita non è nel formato corretto\n\n 31/12/2017", ButtonType.OK);
 	    		alert.setTitle("Formato data errato");
 	    		alert.setHeaderText("Formato data errato");
 	    		alert.showAndWait();
@@ -523,5 +523,4 @@ public class AutoscuolaController {
     }
 }
 
-//TODO sistemare le lettere generate
-//TODO Sistemare la provincia
+
