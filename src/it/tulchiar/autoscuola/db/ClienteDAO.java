@@ -307,6 +307,41 @@ public class ClienteDAO {
 	}
 
 	/**
+	 * Imposta la data di invio lettera di un cliente impostando la data nel campo dataInvioLettera del cliente
+	 * @param cliente il cliente da cancellare
+	 * @return true se la data di invio è stata impostata correttamente, false se
+	 * qualcosa è andato storto
+	 */
+	public boolean setDataInvioLettera(Cliente cliente) {
+		
+		String sql = "UPDATE `autoscuola`.`clienti` SET `dataInvioLettera`=? WHERE `id`=?";
+		
+		Connection conn = DB_common.getConnection();
+		
+		PreparedStatement ps;
+		try {
+
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, LocalDate.now().format(DB_common.formatterDB));
+			ps.setInt(2, cliente.getId());
+			
+			int result = ps.executeUpdate();
+			conn.close();
+			
+			if(result == 1) {
+				return true;
+			} else {
+				return false;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Errore variazione dataInvioLettera cliente in ClienteDAO.setDataInvioLettera(Cliente cliente)");
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	/**
 	 * Cancella logicamente un cliente impostando la data nel campo cancellato del cliente
 	 * @param cliente il cliente da cancellare
 	 * @return true se la data di cancellazione è stata impostata correttamente, false se
@@ -322,7 +357,7 @@ public class ClienteDAO {
 		try {
 
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, LocalDate.now().format(DB_common.formatter));
+			ps.setString(1, LocalDate.now().format(DB_common.formatterDB));
 			ps.setInt(2, cliente.getId());
 			
 			int result = ps.executeUpdate();

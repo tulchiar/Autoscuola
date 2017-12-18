@@ -34,7 +34,7 @@ public class TestClienteDAO {
 		c.setEmail("tulchiar@gmail.com");
 		c.setNote("Annotazione inserita per appuntare qualcosa \nrelativo al cliente");
 		c.setTipoPatente("AB");
-		c.setDataScadenza(LocalDate.parse("2017-12-01", DB_common.formatter));
+		c.setDataScadenza(LocalDate.parse("2017-12-01", DB_common.formatterDB));
 		
 		//System.out.print(dao.add(c));
 		//System.out.println(dao.delete(c));

@@ -63,5 +63,15 @@ public class Model {
 		public boolean delete(Cliente cliente) {
 			return dao.delete(cliente);
 		}
+		
+		/**
+		 * Imposta la data di invio lettera di un cliente impostando la data nel campo dataInvioLettera del cliente
+		 * @param cliente il cliente da cancellare
+		 * @return true se la data di invio è stata impostata correttamente, false se
+		 * qualcosa è andato storto
+		 */
+		public boolean setDataInvioLettera(Cliente cliente) {
+			return dao.setDataInvioLettera(cliente);
+		}
 
 }

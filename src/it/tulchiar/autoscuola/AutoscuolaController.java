@@ -1,10 +1,10 @@
 package it.tulchiar.autoscuola;
 
 import java.net.URL;
-import java.text.Format;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -32,7 +32,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.util.converter.LocalDateStringConverter;
+import javafx.stage.Stage;
 
 public class AutoscuolaController {
 	
@@ -142,9 +142,7 @@ public class AutoscuolaController {
     @FXML // fx:id="btnCancella"
     private Button btnCancella; // Value injected by FXMLLoader
 
-//TODO impostare come default i btn cerca quando si editano le stringhe di ricerca
-//TODO sistemare le lettere generate
-//TODO sistemare l'inserimento e la modifica delle date
+
     
     @FXML
     void doMostraDettagli(MouseEvent event) {
@@ -156,6 +154,7 @@ public class AutoscuolaController {
     		if(chkCreazioneLettere.isSelected()) {
 	    		Lettera l = new Lettera();
 	    		l.creaLetteraScadenzaPatente("", "", clientiSelezionati.get(0));
+	    		model.setDataInvioLettera(clientiSelezionati.get(0));
     		} else {
     			// Passo i parametri alla schermata di modifica
     			txtId.setText( Integer.toString(cliente0.getId()));
@@ -166,12 +165,15 @@ public class AutoscuolaController {
 			txtLocalita.setText(cliente0.getLocalita());
 			txtProvincia.setText(cliente0.getProvincia());
 			txtTipoPatente.setText(cliente0.getTipoPatente());
-			txtDataScadenza.setText(new LocalDateStringConverter(FormatStyle.SHORT).toString(cliente0.getDataScadenza()));
+//			txtDataScadenza.setText(new LocalDateStringConverter(FormatStyle.SHORT).toString(cliente0.getDataScadenza()));
+			System.out.println(cliente0.getDataScadenza());
+			txtDataScadenza.setText(new SimpleDateFormat(DB_common.dataVisualizzata).format(Timestamp.valueOf(cliente0.getDataScadenza().atStartOfDay())));
+			
 			txtTelefono.setText(cliente0.getTelefono());
 			txtCellulare.setText(cliente0.getCellulare());
 			txtEmail.setText(cliente0.getEmail());
 			txtNote.setText(cliente0.getNote());
-			txtDataInvioLettera.setText(new LocalDateStringConverter(FormatStyle.SHORT).toString(cliente0.getDataInvioLettera()));
+			txtDataInvioLettera.setText(new SimpleDateFormat(DB_common.dataVisualizzata).format(Timestamp.valueOf(cliente0.getDataInvioLettera().atStartOfDay())));
     		}
     }
     
@@ -215,6 +217,7 @@ public class AutoscuolaController {
 						cliente.getEmail(),
 						cliente.getNote(), 
 						cliente.getDataInvioLettera() ) );		
+//TODO verificare date
     		}   		
     }
     
@@ -249,7 +252,8 @@ public class AutoscuolaController {
 						cliente.getEmail(),
 						cliente.getNote(), 
 						cliente.getDataInvioLettera() ) );
-			}
+//TODO verificare date
+    		}
     }
 
     @FXML
@@ -272,8 +276,9 @@ public class AutoscuolaController {
 	    	String tipoPatente = txtTipoPatente.getText();
     		
 	    	LocalDate dataScadenza = null;
-	    	try { //LocalDate.now().format(DB_common.formatter)
+	    	try {
 	    		dataScadenza = LocalDate.parse(txtDataScadenza.getText(), DB_common.formatter);
+	    	
 	    	} catch(DateTimeParseException e) {
 	    		Alert alert = new Alert(AlertType.ERROR, "La data di scadenza inserita non è nel formato corretto\n\n 2017-12-31", ButtonType.OK);
 	    		alert.setTitle("Formato data errato");
@@ -289,7 +294,6 @@ public class AutoscuolaController {
 	    	
 	    	LocalDate dataInvioLettera = null;
 	    	try {
-//	    		dataInvioLettera = LocalDate.parse(txtDataInvioLettera.getText());
 	    		dataInvioLettera = LocalDate.parse(txtDataInvioLettera.getText(), DB_common.formatter);
 	    	} catch(DateTimeParseException e) {
 	    		Alert alert = new Alert(AlertType.ERROR, "La data di invio lettera inserita non è nel formato corretto\n\n 2017-12-31", ButtonType.OK);
@@ -447,9 +451,41 @@ public class AutoscuolaController {
     		return false;   	
     }
     
+    	private void btnCercaCognomeSetDefault() {
+    		txtCognomeRicerca.focusedProperty().addListener(new ChangeListener<Boolean>() {
+				@Override
+				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+					btnCercaMeseAnno.setDefaultButton(false);
+					btnCercaCognome.setDefaultButton(true);
+				}
+			});
+    	}    		
+    	
+    	private void btnCercaMeseAnnoSetDefault() {
+    		txtMese.focusedProperty().addListener(new ChangeListener<Boolean>() {
+				@Override
+				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+					btnCercaCognome.setDefaultButton(false);
+					btnCercaMeseAnno.setDefaultButton(true);
+				}
+			});
+    		
+    		txtAnno.focusedProperty().addListener(new ChangeListener<Boolean>() {
+				@Override
+				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+					btnCercaCognome.setDefaultButton(false);
+					btnCercaMeseAnno.setDefaultButton(true);
+				}
+			});	
+    	}
+    	
+    	
+    	
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
     		
+    		btnCercaCognomeSetDefault();
+    		btnCercaMeseAnnoSetDefault();
     		validationCognomeRicerca();
     		validationDataRicerca();
     		validation();
@@ -486,3 +522,6 @@ public class AutoscuolaController {
         assert btnCancella != null : "fx:id=\"btnCancella\" was not injected: check your FXML file 'Autoscuola.fxml'.";
     }
 }
+
+//TODO sistemare le lettere generate
+//TODO Sistemare la provincia

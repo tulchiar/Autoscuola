@@ -39,23 +39,23 @@ public class Lettera {
 		      final PDPageContentStream contentStream = new PDPageContentStream(document, singlePage);
 		     
 		      PDImageXObject pdImage = PDImageXObject.createFromFile("/Users/Marco/Desktop/Autoscuola/Logo.gif", document);
-		      contentStream.drawImage(pdImage, 50, 600);
+		      contentStream.drawImage(pdImage, 10, 620);
 		      
 		      contentStream.beginText();
 		      contentStream.setFont(timesRoman, fontSize);
-		      contentStream.newLineAtOffset(450, 650);
+		      contentStream.newLineAtOffset(360, 680);
 		      contentStream.showText(cliente.getCognome() + " " + cliente.getNome());
 		      contentStream.endText();
 		      
 		      contentStream.beginText();
 		      contentStream.setFont(timesRoman, fontSize);
-		      contentStream.newLineAtOffset(450, 630);
+		      contentStream.newLineAtOffset(360, 660);
 		      contentStream.showText(cliente.getIndirizzo());
 		      contentStream.endText();
 		      
 		      contentStream.beginText();
 		      contentStream.setFont(timesRoman, fontSize);
-		      contentStream.newLineAtOffset(450, 610);
+		      contentStream.newLineAtOffset(360, 640);
 		      contentStream.showText(cliente.getCap() + " " + cliente.getLocalita() + " (" + cliente.getProvincia() + ")");
 		      contentStream.endText();
 		      
