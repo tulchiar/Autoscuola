@@ -44,6 +44,8 @@ public class Lettera {
 		      final PDPageContentStream contentStream = new PDPageContentStream(document, singlePage);
 		     
 //		      PDImageXObject pdImage = PDImageXObject.createFromFile("/Users/Marco/Desktop/Autoscuola/LogoSenzaScritte.gif", document);
+		      
+		      
 		      PDImageXObject pdImage = PDImageXObject.createFromFile("./img/LogoSenzaScritte.gif", document);
 		      contentStream.drawImage(pdImage, 20, 690);
 		      
