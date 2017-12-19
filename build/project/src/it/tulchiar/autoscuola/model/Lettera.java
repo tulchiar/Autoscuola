@@ -11,6 +11,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -48,8 +49,8 @@ public class Lettera {
 //		      PDImageXObject pdImage = PDImageXObject.createFromFile("/Users/Marco/Desktop/Autoscuola/LogoSenzaScritte.gif", document);
 		      
 		      
-//		      PDImageXObject pdImage = PDImageXObject.createFromFile("./img/LogoSenzaScritte.gif", document);
-//		      contentStream.drawImage(pdImage, 20, 690);
+		      PDImageXObject pdImage = PDImageXObject.createFromFile("./img/LogoSenzaScritte.gif", document);
+		      contentStream.drawImage(pdImage, 20, 690);
 		      
 		      contentStream.beginText();
 		      contentStream.setFont(timesRoman, fontSize);

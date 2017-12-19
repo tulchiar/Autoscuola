@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Autoscuola.jar" size="29068" download="eager" />
+    <jar href="Autoscuola.jar" size="29193" download="eager" />
     <jar href="libs/commons-logging-1.2.jar" size="61829" download="eager" />
     <jar href="libs/controlsfx-8.40.14.jar" size="1215643" download="eager" />
     <jar href="libs/fontbox-2.0.8.jar" size="1483772" download="eager" />
