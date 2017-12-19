@@ -17,7 +17,8 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 public class Lettera {
 	
 //	final static String PATH ="/Users/Marco/Desktop/Autoscuola/";
-	final static String PATH ="C:/Autoscuola/LettereScadenze/";
+	final static String PATH ="C:\\Autoscuola\\LettereScadenze\\";
+	
 	private String file;
 	private String path;
 	
