@@ -18,7 +18,7 @@ public class DB_common {
 	public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dataVisualizzata);
 	public static DateTimeFormatter formatterDB = DateTimeFormatter.ofPattern(dataScritturaDb);
 	
-	private static final String DB_CONNECTION_STRING = "jdbc:mysql://localhost/autoscuola?user=root&password=Chrmrc84a15";
+	private static final String DB_CONNECTION_STRING = "jdbc:mysql://localhost/autoscuola?user=root&password=";
 
 	/**
 	 * Crea la connessione e la restituisce, in caso di errore restituisce null

@@ -530,3 +530,5 @@ public class AutoscuolaController {
 //TODO regex // \\ nel controllo indirizzo
 //TODO pulsante stampa silenzioso
 //TODO scorrimento elenco con le frecce
+//TODO installazione su windows
+//TODO backup su drive
