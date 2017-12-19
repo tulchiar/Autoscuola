@@ -1,7 +1,6 @@
 package it.tulchiar.autoscuola.model;
 
 import java.awt.Color;
-import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +11,10 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 
 public class Lettera {
 	
@@ -173,7 +175,9 @@ public class Lettera {
 		      document.save(this.path);
 		  
 		   } catch (IOException ioEx) {
-		      System.err.println(
+			   Alert alert = new Alert(AlertType.ERROR, ioEx.getMessage(), ButtonType.OK);
+			   alert.show();
+			   System.err.println(
 		         "Exception while trying to create simple document - " + ioEx);
 		   }
 
