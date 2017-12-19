@@ -32,7 +32,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 
 public class AutoscuolaController {
 	
@@ -523,4 +522,13 @@ public class AutoscuolaController {
     }
 }
 
-
+//TODO cancellato rimane visibile
+//TODO date obbligatorie in inserimento nuovo cliente
+//TODO quando salvi deve resettare la pagina
+//TODO ingrandire caratteri dettagli
+//TODO checkbox e pulsante per la creazione delle lettere
+//TODO regex // \\ nel controllo indirizzo
+//TODO pulsante stampa silenzioso
+//TODO scorrimento elenco con le frecce
+//TODO installazione su windows
+//TODO backup su drive

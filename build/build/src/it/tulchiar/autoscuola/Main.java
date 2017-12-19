@@ -21,7 +21,7 @@ public class Main extends Application {
 			Model model = new Model();
 			controller.setModel(model);
 			
-			Scene scene = new Scene(root);
+			Scene scene = new Scene(root, 800, 700);
 
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);

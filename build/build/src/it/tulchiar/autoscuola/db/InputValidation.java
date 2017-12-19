@@ -4,7 +4,7 @@ import javafx.scene.control.TextField;
 
 public class InputValidation {
 	
-	public static boolean isFilledByText(TextField textField) {
+	public static boolean isText(TextField textField) {
 		
 		if(!textField.getText().isEmpty()) {
 			

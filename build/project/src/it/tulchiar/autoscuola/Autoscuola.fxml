@@ -42,7 +42,7 @@
                               <Label text="Cognome" />
                               <Label text="Mese" GridPane.columnIndex="2" />
                               <Label text="Anno" GridPane.columnIndex="3" />
-                              <TextField fx:id="txtCognomeRicerca" GridPane.rowIndex="1" />
+                              <TextField fx:id="txtCognomeRicerca" promptText="Premi cerca per mostrare tutti i clienti" GridPane.rowIndex="1" />
                               <TextField fx:id="txtMese" prefWidth="75.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                               <TextField fx:id="txtAnno" prefWidth="75.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                               <Button fx:id="btnCercaMeseAnno" mnemonicParsing="false" onAction="#doCercaMeseAnno" text="Cerca" GridPane.columnIndex="4" GridPane.rowIndex="1" />
@@ -71,12 +71,12 @@
               <content>
                 <AnchorPane>
                      <children>
-                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                        <BorderPane>
                            <right>
-                              <VBox prefHeight="200.0" prefWidth="100.0" spacing="15.0" BorderPane.alignment="CENTER">
+                              <VBox spacing="15.0" BorderPane.alignment="CENTER">
                                  <children>
                                     <Button fx:id="btnSalva" mnemonicParsing="false" onAction="#doSalva" text="Salva" />
-                                    <Button fx:id="btnAnnulla" mnemonicParsing="false" onAction="#doAnnulla" text="Annulla/Resetta" />
+                                    <Button fx:id="btnAnnulla" mnemonicParsing="false" onAction="#doAnnulla" text="Nuovo" />
                                     <Button fx:id="btnCancella" mnemonicParsing="false" onAction="#doCancella" text="Cancella" />
                                  </children>
                                  <BorderPane.margin>
@@ -85,7 +85,7 @@
                               </VBox>
                            </right>
                            <center>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                              <AnchorPane BorderPane.alignment="CENTER">
                                  <children>
                                     <VBox alignment="CENTER" spacing="5.0">
                                        <children>

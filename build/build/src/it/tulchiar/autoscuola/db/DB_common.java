@@ -9,12 +9,14 @@ import javax.swing.JOptionPane;
 
 public class DB_common {
 
+	public static final String dataVisualizzata = "dd/MM/yyyy";
+	public static final String dataScritturaDb = "yyyy-MM-dd";
 	
-	private static final String pattern = "yyyy-MM-dd";
 	/**
 	 * DateTimeFormatter formatter da utilizzare epr impostare correttamente le date
 	 */
-	public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+	public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dataVisualizzata);
+	public static DateTimeFormatter formatterDB = DateTimeFormatter.ofPattern(dataScritturaDb);
 	
 	private static final String DB_CONNECTION_STRING = "jdbc:mysql://localhost/autoscuola?user=root&password=Chrmrc84a15";
 

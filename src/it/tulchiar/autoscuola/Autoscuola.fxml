@@ -76,7 +76,7 @@
                               <VBox spacing="15.0" BorderPane.alignment="CENTER">
                                  <children>
                                     <Button fx:id="btnSalva" mnemonicParsing="false" onAction="#doSalva" text="Salva" />
-                                    <Button fx:id="btnAnnulla" mnemonicParsing="false" onAction="#doAnnulla" text="Annulla/Resetta" />
+                                    <Button fx:id="btnAnnulla" mnemonicParsing="false" onAction="#doAnnulla" text="Nuovo" />
                                     <Button fx:id="btnCancella" mnemonicParsing="false" onAction="#doCancella" text="Cancella" />
                                  </children>
                                  <BorderPane.margin>
