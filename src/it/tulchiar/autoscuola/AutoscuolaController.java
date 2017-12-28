@@ -2,8 +2,10 @@ package it.tulchiar.autoscuola;
 
 import java.net.URL;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -16,6 +18,7 @@ import it.tulchiar.autoscuola.db.DB_common;
 import it.tulchiar.autoscuola.model.Cliente;
 import it.tulchiar.autoscuola.model.Lettera;
 import it.tulchiar.autoscuola.model.Model;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -26,6 +29,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -135,12 +140,20 @@ public class AutoscuolaController {
     @FXML // fx:id="btnSalva"
     private Button btnSalva; // Value injected by FXMLLoader
 
-    @FXML // fx:id="btnAnnulla"
-    private Button btnAnnulla; // Value injected by FXMLLoader
+    @FXML // fx:id="btnNuovo"
+    private Button btnNuovo; // Value injected by FXMLLoader
 
     @FXML // fx:id="btnCancella"
     private Button btnCancella; // Value injected by FXMLLoader
 
+    @FXML // fx:id="tabPane"
+    private TabPane tabPane; // Value injected by FXMLLoader
+
+    @FXML // fx:id="tabRicerca"
+    private Tab tabRicerca; // Value injected by FXMLLoader
+
+    @FXML // fx:id="tabAggiungiModifica"
+    private Tab tabAggiungiModifica; // Value injected by FXMLLoader
 
     
     @FXML
@@ -164,15 +177,24 @@ public class AutoscuolaController {
 			txtLocalita.setText(cliente0.getLocalita());
 			txtProvincia.setText(cliente0.getProvincia());
 			txtTipoPatente.setText(cliente0.getTipoPatente());
-//			txtDataScadenza.setText(new LocalDateStringConverter(FormatStyle.SHORT).toString(cliente0.getDataScadenza()));
-			System.out.println(cliente0.getDataScadenza());
-			txtDataScadenza.setText(new SimpleDateFormat(DB_common.dataVisualizzata).format(Timestamp.valueOf(cliente0.getDataScadenza().atStartOfDay())));
+			
+			if(cliente0.getDataScadenza() == null) {
+				txtDataScadenza.setText("");
+			} else {
+				txtDataScadenza.setText(cliente0.getDataScadenza().format(DateTimeFormatter.ofPattern(DB_common.dataVisualizzata)));
+			}
 			
 			txtTelefono.setText(cliente0.getTelefono());
 			txtCellulare.setText(cliente0.getCellulare());
 			txtEmail.setText(cliente0.getEmail());
 			txtNote.setText(cliente0.getNote());
-			txtDataInvioLettera.setText(new SimpleDateFormat(DB_common.dataVisualizzata).format(Timestamp.valueOf(cliente0.getDataInvioLettera().atStartOfDay())));
+			
+			if(cliente0.getDataInvioLettera() == null) {
+				txtDataInvioLettera.setText("");
+			} else {
+				txtDataInvioLettera.setText(cliente0.getDataInvioLettera().format(DateTimeFormatter.ofPattern(DB_common.dataVisualizzata)));
+			}
+			
     		}
     }
     
@@ -186,8 +208,35 @@ public class AutoscuolaController {
     		colCognome.setCellValueFactory( new PropertyValueFactory<>("cognome") );
 		colNome.setCellValueFactory( new PropertyValueFactory<>("nome") );
 		colTipoPatente.setCellValueFactory( new PropertyValueFactory<>("tipoPatente") );
-		colDataScadenza.setCellValueFactory( new PropertyValueFactory<>("dataScadenza"));
-		colDataInvioLettera.setCellValueFactory( new PropertyValueFactory<>("dataInvioLettera") );
+//		colDataScadenza.setCellValueFactory( new PropertyValueFactory<>("dataScadenza"));
+
+		colDataScadenza.setCellValueFactory( 
+			Cliente -> {
+				SimpleStringProperty property = new SimpleStringProperty();
+//				property.setValue(new SimpleDateFormat(DB_common.dataVisualizzata).format(Timestamp.valueOf(Cliente.getValue().getDataScadenza().atStartOfDay())));
+				
+				if(Cliente.getValue().getDataScadenza() == null ) {
+					property.setValue("");
+				} else {
+					property.setValue(Cliente.getValue().getDataScadenza().format(DateTimeFormatter.ofPattern(DB_common.dataVisualizzata)));
+				}
+				return property;
+		});
+		
+		
+//		colDataInvioLettera.setCellValueFactory( new PropertyValueFactory<>("dataInvioLettera") );
+		
+		colDataInvioLettera.setCellValueFactory( 
+			Cliente -> {
+				SimpleStringProperty property = new SimpleStringProperty();
+				if(Cliente.getValue().getDataInvioLettera() == null) {
+					property.setValue("");
+				} else {
+//					property.setValue(new SimpleDateFormat(DB_common.dataVisualizzata).format(Timestamp.valueOf(Cliente.getValue().getDataInvioLettera().atStartOfDay())));
+					property.setValue(Cliente.getValue().getDataScadenza().format(DateTimeFormatter.ofPattern(DB_common.dataVisualizzata)));
+				}
+				return property;
+		});
 		
 		tblClienti.getItems().clear();
     		ArrayList<Cliente> clienti;
@@ -230,9 +279,29 @@ public class AutoscuolaController {
     		colCognome.setCellValueFactory( new PropertyValueFactory<>("cognome") );
 		colNome.setCellValueFactory( new PropertyValueFactory<>("nome") );
 		colTipoPatente.setCellValueFactory( new PropertyValueFactory<>("tipoPatente") );
+		
 		colDataScadenza.setCellValueFactory( new PropertyValueFactory<>("dataScadenza"));
-		colDataInvioLettera.setCellValueFactory( new PropertyValueFactory<>("dataInvioLettera") );
-    	
+		
+		//		colDataScadenza.setCellValueFactory( new PropertyValueFactory<>("dataScadenza"));
+		
+//		colDataScadenza.setCellValueFactory( 
+//				Cliente -> {
+//					SimpleStringProperty property = new SimpleStringProperty();
+//					DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//					property.setValue(dateFormat.format(Cliente.getValue().getDataScadenza()));
+//					return property;
+//				});
+		
+//		colDataInvioLettera.setCellValueFactory( new PropertyValueFactory<>("dataInvioLettera") );
+		colDataInvioLettera.setCellValueFactory( 
+				Cliente -> {
+					SimpleStringProperty property = new SimpleStringProperty();
+					DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+					property.setValue(dateFormat.format(Cliente.getValue().getDataInvioLettera()));
+					return property;
+				});
+	
+		
     		tblClienti.getItems().clear();
     		
     		for (Cliente cliente : clienti) {
@@ -275,15 +344,18 @@ public class AutoscuolaController {
 	    	String tipoPatente = txtTipoPatente.getText();
     		
 	    	LocalDate dataScadenza = null;
-	    	try {
-	    		dataScadenza = LocalDate.parse(txtDataScadenza.getText(), DB_common.formatter);
-	    	
-	    	} catch(DateTimeParseException e) {
-	    		Alert alert = new Alert(AlertType.ERROR, "La data di scadenza inserita non è nel formato corretto\n\n 31/12/2017", ButtonType.OK);
-	    		alert.setTitle("Formato data errato");
-	    		alert.setHeaderText("Formato data errato");
-	    		alert.showAndWait();
-	    		return;
+	    	if(txtDataScadenza.getText().isEmpty()) {
+	    		dataScadenza = null;
+	    	} else {
+		    	try {
+		    		dataScadenza = LocalDate.parse(txtDataScadenza.getText(), DB_common.formatter);
+		    	} catch(DateTimeParseException e) {
+		    		Alert alert = new Alert(AlertType.ERROR, "Errore inserimento data", ButtonType.OK);
+		    		alert.setTitle("Formato data errato");
+		    		alert.setHeaderText("Formato data errato");
+		    		alert.showAndWait();
+		    		return;
+		    	}
 	    	}
 	    	
 	    	String telefono = txtTelefono.getText();
@@ -292,16 +364,19 @@ public class AutoscuolaController {
 	    	String note = txtNote.getText();
 	    	
 	    	LocalDate dataInvioLettera = null;
-	    	try {
-	    		dataInvioLettera = LocalDate.parse(txtDataInvioLettera.getText(), DB_common.formatter);
-	    	} catch(DateTimeParseException e) {
-	    		Alert alert = new Alert(AlertType.ERROR, "La data di invio lettera inserita non è nel formato corretto\n\n 31/12/2017", ButtonType.OK);
-	    		alert.setTitle("Formato data errato");
-	    		alert.setHeaderText("Formato data errato");
-	    		alert.showAndWait();
-	    		return;
-	    	}
-	    	
+	    if(txtDataInvioLettera.getText().isEmpty()) {
+	    		dataInvioLettera = null;
+	    } else {
+		    	try {
+		    		dataInvioLettera = LocalDate.parse(txtDataInvioLettera.getText(), DB_common.formatter);
+		    	} catch(DateTimeParseException e) {
+		    		Alert alert = new Alert(AlertType.ERROR, "Errore inserimento data", ButtonType.OK);
+		    		alert.setTitle("Formato data errato");
+		    		alert.setHeaderText("Formato data errato");
+		    		alert.showAndWait();
+		    		return;
+		    	}
+	    }
     		
     		
     		if(id == -1) { //Se sono nello stato di nuovo - Aggiungo un nuovo cliente
@@ -309,29 +384,24 @@ public class AutoscuolaController {
 		    	Cliente nuovoCliente = new Cliente(id, cognome, nome, indirizzo, cap, localita, provincia, tipoPatente, dataScadenza, telefono, cellulare, email, note, null);
 		    	
 		    	if(model.add(nuovoCliente)) {
-		    		Alert alert = new Alert(AlertType.INFORMATION);
-		    		alert.setTitle("Nuovo cliente inserito correttamente.");
-		    		alert.setHeaderText("");
-		    		alert.setContentText("Il cliente è stato aggiunto correttamente!\n\n" + nuovoCliente.toString());
-		    		alert.showAndWait();
+		    		tabPane.getSelectionModel().select(tabRicerca);
 		    		return;
 		    }
     		} else { //Se sono nello stato di modifica - modifico il cliente con id = txtId
     			
     			Cliente cliente = new Cliente(id, cognome, nome, indirizzo, cap, localita, provincia, tipoPatente, dataScadenza, telefono, cellulare, email, note, dataInvioLettera);
     		    
-    			model.update(cliente);
-    			
-    			Alert alert = new Alert(AlertType.INFORMATION, "Cliente modificato correttamente.", ButtonType.OK);
-	    		alert.setTitle("Modifica cliente");
-	    		alert.setHeaderText("Cliente modificato");
-	    		alert.showAndWait();
-	    		return;
+    			if(model.update(cliente)) {
+    				tabPane.getSelectionModel().select(tabRicerca);
+		    		
+		    		return;
+    			}
     		}
     }
     
     @FXML
-    void doAnnulla(ActionEvent event) {
+    void doNuovo(ActionEvent event) {
+    		tabPane.getSelectionModel().select(tabAggiungiModifica);
     		resetPannelloAggiungiModifica();
     }
     
@@ -349,12 +419,12 @@ public class AutoscuolaController {
     		        if (type == ButtonType.YES) {
     		        	System.out.println("Cancello");
     		        		if(model.delete(cliente)) {
-    		    			resetPannelloAggiungiModifica();
-    		    			Alert alert2 = new Alert(AlertType.INFORMATION, "Cancellazione avvenuta con successo.\n "
-    		    					+ "(in caso di necessità il record è recuperabile)", ButtonType.OK);
-    		    			alert2.setHeaderText("Cliente cancellato!");
-    		    			alert2.showAndWait();
-    		    			return;
+	    		    			resetPannelloAggiungiModifica();
+	    		    			Alert alert2 = new Alert(AlertType.INFORMATION, "Cancellazione avvenuta con successo.\n "
+	    		    					+ "(in caso di necessità il record è recuperabile)", ButtonType.OK);
+	    		    			alert2.setHeaderText("Cliente cancellato!");
+	    		    			alert2.showAndWait();
+	    		    			return;
     		        		}
     		        }
     		});	
@@ -425,7 +495,7 @@ public class AutoscuolaController {
     		ValidationSupport validationSupport = new ValidationSupport();
     		validationSupport.registerValidator(txtCognome, true, Validator.createRegexValidator("Cognome non inserito", "([A-Z]([a-z]?+)+\\s?)+", Severity.ERROR));
     		validationSupport.registerValidator(txtNome, true, Validator.createRegexValidator("Nome non inserito", "([A-Z]([a-z]?+)+\\s?)+", Severity.ERROR));
-    		validationSupport.registerValidator(txtIndirizzo, false, Validator.createRegexValidator("Indirizzo non inserito correttamente", "(^[A-Z][A-Za-z0-9\\s.]+)?", Severity.ERROR));
+    		validationSupport.registerValidator(txtIndirizzo, false, Validator.createRegexValidator("Indirizzo non inserito correttamente", "(^[A-Z][A-Za-z0-9\\s.()//]+)?", Severity.ERROR));
     		validationSupport.registerValidator(txtCap, false, Validator.createRegexValidator("Cap non corretto", "^([0-9]{5})?$", Severity.ERROR));
     		validationSupport.registerValidator(txtLocalita, false, Validator.createRegexValidator("Località non inserita correttamente", "(([A-Z]([a-z]?+)+\\s?)+)?", Severity.ERROR));
     		validationSupport.registerValidator(txtProvincia, false, Validator.createRegexValidator("Provincia non inserita correttamente Es. PO", "([A-Z][A-Z])?", Severity.ERROR));
@@ -433,6 +503,9 @@ public class AutoscuolaController {
     		validationSupport.registerValidator(txtTelefono, false, Validator.createRegexValidator("Solo numeri ammessi", "(([0-9]?\\s?)+)?", Severity.ERROR));
     		validationSupport.registerValidator(txtCellulare, false, Validator.createRegexValidator("Solo numeri ammessi", "(([0-9]?\\s?)+)?", Severity.ERROR));
     		validationSupport.registerValidator(txtEmail, false, Validator.createRegexValidator("Indirizzo eMail non valido", "(^[a-z0-9_]+@[a-z0-9-]+[.][a-z0-9-.]+)?", Severity.ERROR));
+    		validationSupport.registerValidator(txtDataScadenza, false, Validator.createRegexValidator("Data scadenza patente non valida", "((0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[-/.](19|20)\\d\\d)?", Severity.ERROR));
+    		validationSupport.registerValidator(txtDataInvioLettera, false, Validator.createRegexValidator("Data scadenza patente non valida", "((0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[-/.](19|20)\\d\\d)?", Severity.ERROR));
+    		
     		
     		validationSupport.invalidProperty().addListener(new ChangeListener<Boolean>() {
 
@@ -489,6 +562,9 @@ public class AutoscuolaController {
     		validationDataRicerca();
     		validation();
     		
+    		assert tabPane != null : "fx:id=\"tabPane\" was not injected: check your FXML file 'Autoscuola.fxml'.";
+    		assert tabRicerca != null : "fx:id=\"tabRicerca\" was not injected: check your FXML file 'Autoscuola.fxml'.";
+    		assert tabAggiungiModifica != null : "fx:id=\"tabAggiungiModifica\" was not injected: check your FXML file 'Autoscuola.fxml'.";
     		assert chkCreazioneLettere != null : "fx:id=\"chkCreazioneLettere\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert txtAnno != null : "fx:id=\"txtAnno\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert txtCognomeRicerca != null : "fx:id=\"txtCognomeRicerca\" was not injected: check your FXML file 'Autoscuola.fxml'.";
@@ -517,14 +593,14 @@ public class AutoscuolaController {
         assert txtDataInvioLettera != null : "fx:id=\"txtDataInvioLettera\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert txtNote != null : "fx:id=\"txtNote\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert btnSalva != null : "fx:id=\"btnSalva\" was not injected: check your FXML file 'Autoscuola.fxml'.";
-        assert btnAnnulla != null : "fx:id=\"btnAnnulla\" was not injected: check your FXML file 'Autoscuola.fxml'.";
+        assert btnNuovo != null : "fx:id=\"btnAnnulla\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert btnCancella != null : "fx:id=\"btnCancella\" was not injected: check your FXML file 'Autoscuola.fxml'.";
     }
 }
 
-//TODO cancellato rimane visibile
-//TODO date obbligatorie in inserimento nuovo cliente
-//TODO quando salvi deve resettare la pagina
+//cancellato rimane visibile
+//TODO date obbligatorie in modifica nuovo cliente
+//quando salvi deve resettare la pagina
 //TODO ingrandire caratteri dettagli
 //TODO checkbox e pulsante per la creazione delle lettere
 //TODO regex // \\ nel controllo indirizzo

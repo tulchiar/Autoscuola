@@ -13,21 +13,33 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
+import it.tulchiar.autoscuola.Common;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 
 public class Lettera {
 	
-//	final static String PATH ="/Users/Marco/Desktop/Autoscuola/";
-	final static String PATH ="C:\\Autoscuola\\LettereScadenze\\";
 	
 	private String file;
 	private String path;
+//	private String PATH;
+	final static String PATH ="/Users/Marco/Desktop/Autoscuola/";
 	
+	public void initialize() {
+
+//	final static String PATH ="/Users/Marco/Desktop/Autoscuola/";
+//	final static String PATH ="C:\\Autoscuola\\LettereScadenze\\";
+	System.out.println(Common.letteraScadenzaPatente_OSX_PATH);
+	System.out.println(Common.letteraScadenzaPatente_WIN_PATH);
+	
+	
+	}
 	
 	public void creaLetteraScadenzaPatente(String path, String file, Cliente cliente) {
 	
+		initialize();
+		
 		//2017_01_01_Chiarello_Marco_lettera scadenza patente.odt
 		this.file = LocalDate.now().getYear() + "_" 
 				+ String.format("%02d",LocalDate.now().getMonthValue()) +"_"

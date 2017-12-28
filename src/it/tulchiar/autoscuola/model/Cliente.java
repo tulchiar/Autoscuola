@@ -3,6 +3,8 @@ package it.tulchiar.autoscuola.model;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import it.tulchiar.autoscuola.db.DB_common;
+
 // "id";"cognome";"nome";"indirizzo";"cap";"localita";"provincia";
 //"tipoPatente";"dataScadenza";"telefono";"cellulare";"email";"note"
 public class Cliente {
@@ -20,7 +22,6 @@ public class Cliente {
 	private String email;
 	private String note;
 	private LocalDate dataInvioLettera;
-	
 	
 	
 	public Cliente(int id, String cognome, String nome, String indirizzo, String cap, String localita, String provincia,
@@ -298,6 +299,10 @@ public class Cliente {
 	 */
 	@Override
 	public String toString() {
+
+		String dataScadenza = this.dataScadenza == null ? "" : this.dataScadenza.format(DateTimeFormatter.ofPattern(DB_common.dataVisualizzata)) ;
+		String dataInvioLettera = this.dataInvioLettera == null ? "" : this.dataInvioLettera.format(DateTimeFormatter.ofPattern(DB_common.dataVisualizzata)) ;
+		
 		return String.format(
 				"Cliente [id=%s]\n"
 				+ "Cognome e Nome - %s %s\n"
@@ -308,7 +313,9 @@ public class Cliente {
 				+ "\n"
 				+ "Note: %s",
 				id, cognome, nome, indirizzo, cap, localita, provincia, telefono, cellulare,
-				email, tipoPatente, dataScadenza.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-				dataInvioLettera.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), note);
+				email, tipoPatente, 
+				dataScadenza,
+				dataInvioLettera,
+				note);
 	}
 }
