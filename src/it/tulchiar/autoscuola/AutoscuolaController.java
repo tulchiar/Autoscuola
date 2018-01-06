@@ -1,14 +1,14 @@
 package it.tulchiar.autoscuola;
 
 import java.net.URL;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
+
+import javax.swing.event.ChangeEvent;
 
 import org.controlsfx.validation.Severity;
 import org.controlsfx.validation.ValidationSupport;
@@ -18,11 +18,17 @@ import it.tulchiar.autoscuola.db.DB_common;
 import it.tulchiar.autoscuola.model.Cliente;
 import it.tulchiar.autoscuola.model.Lettera;
 import it.tulchiar.autoscuola.model.Model;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -35,8 +41,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
 
 public class AutoscuolaController {
 	
@@ -92,6 +100,9 @@ public class AutoscuolaController {
     @FXML // fx:id="colDataInvioLettera"
     private TableColumn<Cliente, String> colDataInvioLettera; // Value injected by FXMLLoader
 
+    @FXML // fx:id="colSelezionato"
+    private TableColumn<Cliente, Boolean> colSelezionato; // Value injected by FXMLLoader
+    
     @FXML // fx:id="txtDettagliCliente"
     private TextArea txtDettagliCliente; // Value injected by FXMLLoader
 
@@ -145,6 +156,12 @@ public class AutoscuolaController {
 
     @FXML // fx:id="btnCancella"
     private Button btnCancella; // Value injected by FXMLLoader
+ 
+    @FXML // fx:id="btnSelezionaTutti"
+    private Button btnSelezionaTutti; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="btnCreaLettere"
+    private Button btnCreaLettere; // Value injected by FXMLLoader
 
     @FXML // fx:id="tabPane"
     private TabPane tabPane; // Value injected by FXMLLoader
@@ -155,14 +172,32 @@ public class AutoscuolaController {
     @FXML // fx:id="tabAggiungiModifica"
     private Tab tabAggiungiModifica; // Value injected by FXMLLoader
 
+    private ObservableList<Cliente> clientiSelezionati;
+    
+    
+    //TODO
+    @FXML
+    void doCreaLettere() {
+    		// Stampo l'elenco dei clienti selezionati
+    			
+    		System.out.println(clientiSelezionati.toString());
+    		
+    }
+    
+    @FXML
+    void doSelezionaTutti() {
+    		
+    }
+    
     
     @FXML
     void doMostraDettagli(MouseEvent event) {
-    		ObservableList<Cliente> clientiSelezionati = tblClienti.getSelectionModel().getSelectedItems();
+    		//clientiSelezionati = tblClienti.getSelectionModel().getSelectedItems();
     		
     		txtDettagliCliente.setText(clientiSelezionati.get(0).toString());
     		Cliente cliente0 = clientiSelezionati.get(0);
     		
+    		// Creo la lettera da inviare al cliente
     		if(chkCreazioneLettere.isSelected()) {
 	    		Lettera l = new Lettera();
 	    		l.creaLetteraScadenzaPatente("", "", clientiSelezionati.get(0));
@@ -208,12 +243,10 @@ public class AutoscuolaController {
     		colCognome.setCellValueFactory( new PropertyValueFactory<>("cognome") );
 		colNome.setCellValueFactory( new PropertyValueFactory<>("nome") );
 		colTipoPatente.setCellValueFactory( new PropertyValueFactory<>("tipoPatente") );
-//		colDataScadenza.setCellValueFactory( new PropertyValueFactory<>("dataScadenza"));
 
 		colDataScadenza.setCellValueFactory( 
 			Cliente -> {
 				SimpleStringProperty property = new SimpleStringProperty();
-//				property.setValue(new SimpleDateFormat(DB_common.dataVisualizzata).format(Timestamp.valueOf(Cliente.getValue().getDataScadenza().atStartOfDay())));
 				
 				if(Cliente.getValue().getDataScadenza() == null ) {
 					property.setValue("");
@@ -222,21 +255,45 @@ public class AutoscuolaController {
 				}
 				return property;
 		});
-		
-		
-//		colDataInvioLettera.setCellValueFactory( new PropertyValueFactory<>("dataInvioLettera") );
-		
+				
 		colDataInvioLettera.setCellValueFactory( 
 			Cliente -> {
 				SimpleStringProperty property = new SimpleStringProperty();
 				if(Cliente.getValue().getDataInvioLettera() == null) {
 					property.setValue("");
 				} else {
-//					property.setValue(new SimpleDateFormat(DB_common.dataVisualizzata).format(Timestamp.valueOf(Cliente.getValue().getDataInvioLettera().atStartOfDay())));
 					property.setValue(Cliente.getValue().getDataScadenza().format(DateTimeFormatter.ofPattern(DB_common.dataVisualizzata)));
 				}
 				return property;
 		});
+		
+//TODO aggiungere colonna con checkbox
+		
+		colSelezionato.setCellFactory(column -> new CheckBoxTableCell<>());
+		
+		colSelezionato.setCellValueFactory(cellData -> {
+            Cliente cellValue = cellData.getValue();
+            BooleanProperty property = cellValue.getSelezionato();
+
+            // Add listener to handler change
+//            property.addListener((observable, oldValue, newValue) -> cellValue.setSelezionato(newValue));
+            property.addListener(new ChangeListener<Boolean>(){
+
+				@Override
+				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+					cellValue.setSelezionato(new SimpleBooleanProperty(!cellValue.getSelezionato().getValue()));
+					clientiSelezionati.add(cellValue);
+				}
+            	
+            });
+
+            return property;
+        });
+		
+		colSelezionato.setEditable(true);
+		tblClienti.setEditable(true);
+		
+	
 		
 		tblClienti.getItems().clear();
     		ArrayList<Cliente> clienti;
@@ -265,7 +322,6 @@ public class AutoscuolaController {
 						cliente.getEmail(),
 						cliente.getNote(), 
 						cliente.getDataInvioLettera() ) );		
-//TODO verificare date
     		}   		
     }
     
@@ -279,28 +335,42 @@ public class AutoscuolaController {
     		colCognome.setCellValueFactory( new PropertyValueFactory<>("cognome") );
 		colNome.setCellValueFactory( new PropertyValueFactory<>("nome") );
 		colTipoPatente.setCellValueFactory( new PropertyValueFactory<>("tipoPatente") );
+				
+		colDataScadenza.setCellValueFactory( 
+				Cliente -> {
+					SimpleStringProperty property = new SimpleStringProperty();
+					
+					if(Cliente.getValue().getDataScadenza() == null ) {
+						property.setValue("");
+					} else {
+						property.setValue(Cliente.getValue().getDataScadenza().format(DateTimeFormatter.ofPattern(DB_common.dataVisualizzata)));
+					}
+					return property;
+			});
 		
-		colDataScadenza.setCellValueFactory( new PropertyValueFactory<>("dataScadenza"));
 		
-		//		colDataScadenza.setCellValueFactory( new PropertyValueFactory<>("dataScadenza"));
-		
-//		colDataScadenza.setCellValueFactory( 
-//				Cliente -> {
-//					SimpleStringProperty property = new SimpleStringProperty();
-//					DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-//					property.setValue(dateFormat.format(Cliente.getValue().getDataScadenza()));
-//					return property;
-//				});
-		
-//		colDataInvioLettera.setCellValueFactory( new PropertyValueFactory<>("dataInvioLettera") );
 		colDataInvioLettera.setCellValueFactory( 
 				Cliente -> {
 					SimpleStringProperty property = new SimpleStringProperty();
-					DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-					property.setValue(dateFormat.format(Cliente.getValue().getDataInvioLettera()));
+					if(Cliente.getValue().getDataInvioLettera() == null) {
+						property.setValue("");
+					} else {
+						property.setValue(Cliente.getValue().getDataScadenza().format(DateTimeFormatter.ofPattern(DB_common.dataVisualizzata)));
+					}
 					return property;
-				});
-	
+			});	
+		
+		colSelezionato.setCellFactory(column -> new CheckBoxTableCell<>());
+//		colSelezionato.addEventHandler(E, new EventHandler<T>());
+		colSelezionato.setEditable(true);
+		tblClienti.setEditable(true);
+		
+		
+		
+		
+//checkedCol.setCellFactory(CheckBoxTableCell.forTableColumn(checkedCol));
+	    
+		
 		
     		tblClienti.getItems().clear();
     		
@@ -562,6 +632,8 @@ public class AutoscuolaController {
     		validationDataRicerca();
     		validation();
     		
+    		clientiSelezionati = tblClienti.getItems();
+    		
     		assert tabPane != null : "fx:id=\"tabPane\" was not injected: check your FXML file 'Autoscuola.fxml'.";
     		assert tabRicerca != null : "fx:id=\"tabRicerca\" was not injected: check your FXML file 'Autoscuola.fxml'.";
     		assert tabAggiungiModifica != null : "fx:id=\"tabAggiungiModifica\" was not injected: check your FXML file 'Autoscuola.fxml'.";
@@ -577,6 +649,7 @@ public class AutoscuolaController {
         assert colTipoPatente != null : "fx:id=\"colTipoPatente\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert colDataScadenza != null : "fx:id=\"colDataScadenza\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert colDataInvioLettera != null : "fx:id=\"colDataInvioLetteradataInvioLettera\" was not injected: check your FXML file 'Autoscuola.fxml'.";
+        assert colSelezionato != null : "fx:id=\"colSelezionato\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert txtDettagliCliente != null : "fx:id=\"txtDettagliCliente\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert txtCognome != null : "fx:id=\"txtCognome\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert txtId != null : "fx:id=\"txtId\" was not injected: check your FXML file 'Autoscuola.fxml'.";
@@ -595,6 +668,8 @@ public class AutoscuolaController {
         assert btnSalva != null : "fx:id=\"btnSalva\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert btnNuovo != null : "fx:id=\"btnAnnulla\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert btnCancella != null : "fx:id=\"btnCancella\" was not injected: check your FXML file 'Autoscuola.fxml'.";
+        assert btnCreaLettere != null : "fx:id=\"btnCreaLettere\" was not injected: check your FXML file 'Autoscuola.fxml'.";
+        assert btnSelezionaTutti != null : "fx:id=\"btnSelezionaTutti\" was not injected: check your FXML file 'Autoscuola.fxml'.";
     }
 }
 

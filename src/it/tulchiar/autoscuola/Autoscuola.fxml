@@ -37,7 +37,8 @@
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="10.0" prefWidth="86.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="9.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="476.0" minWidth="10.0" prefWidth="476.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                                       </columnConstraints>
                                       <rowConstraints>
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -53,6 +54,8 @@
                                           <Button fx:id="btnCercaMeseAnno" mnemonicParsing="false" onAction="#doCercaMeseAnno" text="Cerca" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                                           <Button fx:id="btnCercaCognome" mnemonicParsing="false" onAction="#doCercaCognome" text="Cerca" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                           <CheckBox fx:id="chkCreazioneLettere" mnemonicParsing="false" text="Creazione Lettere" GridPane.columnIndex="4" />
+                                          <Button fx:id="btnCreaLettere" mnemonicParsing="false" onAction="#doCreaLettere" text="Crea Lettere" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                                          <Button fx:id="btnSelezionaTutti" mnemonicParsing="false" onAction="#doSelezionaTutti" text="Seleziona tutti" GridPane.columnIndex="5" />
                                        </children>
                                        <padding>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -65,6 +68,7 @@
                                           <TableColumn fx:id="colTipoPatente" prefWidth="58.0" text="Pat." />
                                           <TableColumn fx:id="colDataScadenza" prefWidth="87.0" text="Scadenza" />
                                           <TableColumn fx:id="colDataInvioLettera" prefWidth="91.0" text="Invio Lettera" />
+                                          <TableColumn fx:id="colSelezionato" prefWidth="75.0" text="Sel." />
                                       </columns>
                                     </TableView>
                                     <TextArea fx:id="txtDettagliCliente">

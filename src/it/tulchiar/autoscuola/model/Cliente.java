@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import it.tulchiar.autoscuola.db.DB_common;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
 // "id";"cognome";"nome";"indirizzo";"cap";"localita";"provincia";
 //"tipoPatente";"dataScadenza";"telefono";"cellulare";"email";"note"
@@ -22,8 +24,23 @@ public class Cliente {
 	private String email;
 	private String note;
 	private LocalDate dataInvioLettera;
+	private BooleanProperty Selezionato;
 	
 	
+	/**
+	 * @return the selezionato
+	 */
+	public BooleanProperty getSelezionato() {
+		return Selezionato;
+	}
+
+	/**
+	 * @param selezionato the selezionato to set
+	 */
+	public void setSelezionato(BooleanProperty selezionato) {
+		Selezionato = selezionato;
+	}
+
 	public Cliente(int id, String cognome, String nome, String indirizzo, String cap, String localita, String provincia,
 			String tipoPatente, LocalDate dataScadenza, String telefono, String cellulare, String email, String note, LocalDate dataInvioLettera) {
 		super();
@@ -41,6 +58,7 @@ public class Cliente {
 		this.email = email;
 		this.note = note;
 		this.dataInvioLettera = dataInvioLettera;
+		this.Selezionato = new SimpleBooleanProperty(false);
 	}
 
 	public Cliente(int id, String cognome, String nome) {
@@ -59,6 +77,7 @@ public class Cliente {
 		this.email = null;
 		this.note = null;
 		this.dataInvioLettera = null;
+		this.Selezionato = new SimpleBooleanProperty(false);
 	}
 	
 	/**

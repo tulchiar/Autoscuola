@@ -1,0 +1,6 @@
+#Impostazioni per Autoscuola La Querce
+#Sat Dec 23 20:30:26 CET 2017
+dbConnectionStringBuild=jdbc\:mysql\://localhost/autoscuola?user\=root&password\=
+letteraScadenzaPatente_OSX_PATH=/Users/Marco/Desktop/Autoscuola/
+letteraScadenzaPatente_WIN_PATH=C\:\\Autoscuola\\LettereScadenze\\
+dbConnectionStringDev=jdbc\:mysql\://localhost/autoscuola?user\=root&password\=Chrmrc84a15
