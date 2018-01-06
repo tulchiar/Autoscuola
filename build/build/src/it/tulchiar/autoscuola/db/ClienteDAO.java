@@ -26,7 +26,7 @@ public class ClienteDAO {
 		
 		String sql = "SELECT id, cognome, nome, indirizzo, cap, localita, provincia, tipoPatente, "
 						  + "dataScadenza, telefono, cellulare, email, note, dataInvioLettera "
-				   + "FROM autoscuola.clienti;";
+				   + "FROM autoscuola.clienti WHERE cancellato IS NULL;";
 		
 		Connection conn = DB_common.getConnection();
 		
@@ -43,7 +43,17 @@ public class ClienteDAO {
 				String localita = rs.getString("localita");
 				String provincia = rs.getString("provincia");
 				String tipoPatente = rs.getString("tipoPatente");
-				LocalDate dataScadenza = rs.getDate("dataScadenza").toLocalDate();
+				
+//				LocalDate dataScadenza = rs.getDate("dataScadenza").toLocalDate();
+				
+				LocalDate dataScadenza;
+				if(rs.getDate("dataScadenza") == null) {
+//					dataScadenza = LocalDate.MIN;
+					dataScadenza = null;
+				} else {
+					dataScadenza  = rs.getDate("dataScadenza").toLocalDate();
+				}
+				
 				String telefono = rs.getString("telefono");
 				String cellulare = rs.getString("cellulare");
 				String email = rs.getString("email");
@@ -52,7 +62,8 @@ public class ClienteDAO {
 				//TODO Sistemare data invio lettera, se è null è un problema
 				LocalDate dataInvioLettera;
 				if(rs.getDate("dataInvioLettera") == null) {
-					dataInvioLettera = LocalDate.MIN;
+//					dataInvioLettera = LocalDate.MIN;
+					dataInvioLettera = null;
 				} else {
 					dataInvioLettera = rs.getDate("dataInvioLettera").toLocalDate();
 				}
@@ -83,7 +94,8 @@ public class ClienteDAO {
 		String sql = "SELECT id, cognome, nome, indirizzo, cap, localita, provincia, tipoPatente, "
 						  + "dataScadenza, telefono, cellulare, email, note, dataInvioLettera "
 				   + "FROM autoscuola.clienti "
-				   + "WHERE cognome LIKE ?;";
+				   + "WHERE cognome LIKE ?"
+				   + "AND cancellato IS NULL;";
 		
 		Connection conn = DB_common.getConnection();
 		
@@ -103,7 +115,17 @@ public class ClienteDAO {
 				String localita = rs.getString("localita");
 				String provincia = rs.getString("provincia");
 				String tipoPatente = rs.getString("tipoPatente");
-				LocalDate dataScadenza = rs.getDate("dataScadenza").toLocalDate();
+				
+//				LocalDate dataScadenza = rs.getDate("dataScadenza").toLocalDate();
+				
+				LocalDate dataScadenza;
+				if(rs.getDate("dataScadenza") == null) {
+//					dataScadenza = LocalDate.MIN;
+					dataScadenza = null;
+				} else {
+					dataScadenza = rs.getDate("dataScadenza").toLocalDate();
+				}
+				
 				String telefono = rs.getString("telefono");
 				String cellulare = rs.getString("cellulare");
 				String email = rs.getString("email");
@@ -111,7 +133,8 @@ public class ClienteDAO {
 				
 				LocalDate dataInvioLettera;
 				if(rs.getDate("dataInvioLettera") == null) {
-					dataInvioLettera = LocalDate.MIN;
+//					dataInvioLettera = LocalDate.MIN;
+					dataInvioLettera = null;
 				} else {
 					dataInvioLettera = rs.getDate("dataInvioLettera").toLocalDate();
 				}
@@ -175,7 +198,8 @@ public class ClienteDAO {
 				
 				LocalDate dataInvioLettera;
 				if(rs.getDate("dataInvioLettera") == null) {
-					dataInvioLettera = LocalDate.MIN;
+//					dataInvioLettera = LocalDate.MIN;
+					dataInvioLettera = null;
 				} else {
 					dataInvioLettera = rs.getDate("dataInvioLettera").toLocalDate();
 				}
@@ -221,7 +245,13 @@ public class ClienteDAO {
 				ps.setString(5, cliente.getLocalita());
 				ps.setString(6, cliente.getProvincia());
 				ps.setString(7, cliente.getTipoPatente());
-				ps.setDate(8, Date.valueOf(cliente.getDataScadenza()));
+				
+				if(cliente.getDataScadenza() == null) {
+					ps.setNull(8, java.sql.Types.DATE);
+				} else {
+					ps.setDate(8, Date.valueOf(cliente.getDataScadenza()));
+				}
+				
 				ps.setString(9, cliente.getTelefono());		
 				ps.setString(10, cliente.getCellulare());
 				ps.setString(11, cliente.getEmail());
@@ -279,12 +309,28 @@ public class ClienteDAO {
 			ps.setString(5, cliente.getLocalita());
 			ps.setString(6, cliente.getProvincia());
 			ps.setString(7, cliente.getTipoPatente());
-			ps.setDate(8, Date.valueOf(cliente.getDataScadenza()));
+			
+			if(cliente.getDataScadenza() == null) {
+				ps.setNull(8, java.sql.Types.DATE);
+			} else {
+				ps.setDate(8, Date.valueOf(cliente.getDataScadenza()));
+			}
+			
+//			ps.setDate(8, Date.valueOf(cliente.getDataScadenza()));
+			
 			ps.setString(9, cliente.getTelefono());		
 			ps.setString(10, cliente.getCellulare());
 			ps.setString(11, cliente.getEmail());
 			ps.setString(12, cliente.getNote());
-			ps.setDate(13, Date.valueOf(cliente.getDataScadenza()));
+//			ps.setDate(13, Date.valueOf(cliente.getDataInvioLettera()));
+			
+			if(cliente.getDataInvioLettera() == null) {
+				ps.setNull(13, java.sql.Types.DATE);
+			} else {
+				ps.setDate(13, Date.valueOf(cliente.getDataScadenza()));
+			}
+			
+			
 			ps.setInt(14, cliente.getId());
 			
 			int result = ps.executeUpdate();

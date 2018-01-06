@@ -24,7 +24,7 @@ public class Lettera {
 	private String file;
 	private String path;
 //	private String PATH;
-	final static String PATH ="C:\\Autoscuola\\LettereScadenze\\";
+	final static String PATH ="/Users/Marco/Desktop/Autoscuola/";
 	
 	public void initialize() {
 

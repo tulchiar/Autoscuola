@@ -10,13 +10,18 @@ import java.util.Properties;
 public class Common {
 	
 	public static boolean isDevelopmentEnvironment() {
-	    boolean isEclipse = true;
+		System.out.println(System.getenv("isRunningInEclipse"));
+		boolean isEclipse = true;
 	    if (System.getenv("isRunningInEclipse") == null) {
 	        isEclipse = false;
+	        System.out.println("#### NON STA GIRANDO IN ECLIPSE ####");
+	    } else {
+	    		isEclipse = true;
+	    		System.out.println("#### STA GIRANDO IN ECLIPSE ####");
 	    }
-	    return isEclipse;
-	}
+	    	return isEclipse;
 	
+	}
 	//////////// Properties ///////////////////
 	public static String dbConnectionStringBuild = "";
 	public static String dbConnectionStringDev = "";

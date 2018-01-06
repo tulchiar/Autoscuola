@@ -26,7 +26,7 @@ public class Main extends Application {
 			Model model = new Model();
 			controller.setModel(model);
 			
-			Scene scene = new Scene(root, 800, 700);
+			Scene scene = new Scene(root, 1100, 700);
 
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
@@ -34,7 +34,7 @@ public class Main extends Application {
 	
 			// Verifico	se l'applicazione sta girando da dentro Eclipse o da una versione compilata	
 			if(Common.isDevelopmentEnvironment()) {
-				System.out.println("APLICATION RUNNING IN ECLIPSE");
+//				System.out.println("APLICATION RUNNING IN ECLIPSE");
 			} else {
 				Alert alert = new Alert(AlertType.INFORMATION, "Autoscuol La Querce", ButtonType.OK);
 				alert.show();
