@@ -6,9 +6,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
-
-import javax.swing.event.ChangeEvent;
 
 import org.controlsfx.validation.Severity;
 import org.controlsfx.validation.ValidationSupport;
@@ -18,17 +15,11 @@ import it.tulchiar.autoscuola.db.DB_common;
 import it.tulchiar.autoscuola.model.Cliente;
 import it.tulchiar.autoscuola.model.Lettera;
 import it.tulchiar.autoscuola.model.Model;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -44,7 +35,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.util.Callback;
 
 public class AutoscuolaController {
 	
@@ -175,7 +165,7 @@ public class AutoscuolaController {
     private ObservableList<Cliente> clientiSelezionati;
     
     
-    //TODO
+    //TODO implementare il metodo doCreaLettere
     @FXML
     void doCreaLettere() {
     		// Stampo l'elenco dei clienti selezionati
@@ -184,6 +174,7 @@ public class AutoscuolaController {
     		
     }
     
+    //TODO implementare il metodo doSelezionaTutti
     @FXML
     void doSelezionaTutti() {
     		
@@ -192,7 +183,7 @@ public class AutoscuolaController {
     
     @FXML
     void doMostraDettagli(MouseEvent event) {
-    		//clientiSelezionati = tblClienti.getSelectionModel().getSelectedItems();
+		clientiSelezionati = tblClienti.getSelectionModel().getSelectedItems();
     		
     		txtDettagliCliente.setText(clientiSelezionati.get(0).toString());
     		Cliente cliente0 = clientiSelezionati.get(0);
@@ -262,37 +253,45 @@ public class AutoscuolaController {
 				if(Cliente.getValue().getDataInvioLettera() == null) {
 					property.setValue("");
 				} else {
-					property.setValue(Cliente.getValue().getDataScadenza().format(DateTimeFormatter.ofPattern(DB_common.dataVisualizzata)));
+					property.setValue(Cliente.getValue().getDataInvioLettera().format(DateTimeFormatter.ofPattern(DB_common.dataVisualizzata)));
 				}
 				return property;
 		});
 		
 //TODO aggiungere colonna con checkbox
 		
-		colSelezionato.setCellFactory(column -> new CheckBoxTableCell<>());
-		
-		colSelezionato.setCellValueFactory(cellData -> {
-            Cliente cellValue = cellData.getValue();
-            BooleanProperty property = cellValue.getSelezionato();
-
-            // Add listener to handler change
-//            property.addListener((observable, oldValue, newValue) -> cellValue.setSelezionato(newValue));
-            property.addListener(new ChangeListener<Boolean>(){
-
-				@Override
-				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-					cellValue.setSelezionato(new SimpleBooleanProperty(!cellValue.getSelezionato().getValue()));
-					clientiSelezionati.add(cellValue);
-				}
-            	
-            });
-
-            return property;
-        });
-		
-		colSelezionato.setEditable(true);
-		tblClienti.setEditable(true);
-		
+//		colSelezionato.setCellFactory(column -> new CheckBoxTableCell<>());
+//		
+//		colSelezionato.setCellValueFactory(cellData -> {
+//            Cliente cellValue = cellData.getValue();
+//            BooleanProperty property = cellValue.getSelezionato();
+//
+//            // Add listener to handler change
+////            property.addListener((observable, oldValue, newValue) -> cellValue.setSelezionato(newValue));
+//            property.addListener(new ChangeListener<Boolean>(){
+//            
+//				@Override
+//				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+//					cellValue.setSelezionato(new SimpleBooleanProperty(cellValue.getSelezionato().getValue()));
+////					clientiSelezionati.add(cellValue);
+//					System.out.println("Nuovo Valore Selezionato: " + cellValue.getSelezionato().getValue());
+//					
+//					if(cellValue.getSelezionato().getValue()) {
+//						clientiSelezionati.add(cellValue);
+//					}
+//					
+//					System.out.println(clientiSelezionati);
+//					
+//				}
+//            	
+//            });
+//
+//            return property;
+//        });
+//		
+//		colSelezionato.setEditable(true);
+//		tblClienti.setEditable(true);
+//		
 	
 		
 		tblClienti.getItems().clear();
@@ -626,13 +625,19 @@ public class AutoscuolaController {
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
     		
+    		//Disabilito i pulsanti in fase di test
+    		btnSelezionaTutti.setDisable(true);
+    		btnSelezionaTutti.setVisible(false);
+    		btnCreaLettere.setDisable(true);
+    		btnCreaLettere.setVisible(false);
+    		colSelezionato.setVisible(false);
+    	
     		btnCercaCognomeSetDefault();
     		btnCercaMeseAnnoSetDefault();
     		validationCognomeRicerca();
     		validationDataRicerca();
     		validation();
     		
-    		clientiSelezionati = tblClienti.getItems();
     		
     		assert tabPane != null : "fx:id=\"tabPane\" was not injected: check your FXML file 'Autoscuola.fxml'.";
     		assert tabRicerca != null : "fx:id=\"tabRicerca\" was not injected: check your FXML file 'Autoscuola.fxml'.";
@@ -676,10 +681,10 @@ public class AutoscuolaController {
 //cancellato rimane visibile
 //TODO date obbligatorie in modifica nuovo cliente
 //quando salvi deve resettare la pagina
-//TODO ingrandire caratteri dettagli
+//ingrandire caratteri dettagli
 //TODO checkbox e pulsante per la creazione delle lettere
-//TODO regex // \\ nel controllo indirizzo
+//regex // \\ nel controllo indirizzo
 //TODO pulsante stampa silenzioso
 //TODO scorrimento elenco con le frecce
 //TODO installazione su windows
-//TODO backup su drive
+//backup su dropbox

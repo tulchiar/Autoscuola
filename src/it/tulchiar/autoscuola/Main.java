@@ -34,7 +34,7 @@ public class Main extends Application {
 	
 			// Verifico	se l'applicazione sta girando da dentro Eclipse o da una versione compilata	
 			if(Common.isDevelopmentEnvironment()) {
-//				System.out.println("APLICATION RUNNING IN ECLIPSE");
+				System.out.println("APLICATION RUNNING IN ECLIPSE");
 			} else {
 				Alert alert = new Alert(AlertType.INFORMATION, "Autoscuol La Querce", ButtonType.OK);
 				alert.show();
