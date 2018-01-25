@@ -15,6 +15,8 @@ import it.tulchiar.autoscuola.db.DB_common;
 import it.tulchiar.autoscuola.model.Cliente;
 import it.tulchiar.autoscuola.model.Lettera;
 import it.tulchiar.autoscuola.model.Model;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -260,39 +262,40 @@ public class AutoscuolaController {
 		
 //TODO aggiungere colonna con checkbox
 		
-//		colSelezionato.setCellFactory(column -> new CheckBoxTableCell<>());
-//		
-//		colSelezionato.setCellValueFactory(cellData -> {
-//            Cliente cellValue = cellData.getValue();
-//            BooleanProperty property = cellValue.getSelezionato();
-//
-//            // Add listener to handler change
-////            property.addListener((observable, oldValue, newValue) -> cellValue.setSelezionato(newValue));
-//            property.addListener(new ChangeListener<Boolean>(){
-//            
-//				@Override
-//				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-//					cellValue.setSelezionato(new SimpleBooleanProperty(cellValue.getSelezionato().getValue()));
-////					clientiSelezionati.add(cellValue);
-//					System.out.println("Nuovo Valore Selezionato: " + cellValue.getSelezionato().getValue());
-//					
-//					if(cellValue.getSelezionato().getValue()) {
-//						clientiSelezionati.add(cellValue);
-//					}
-//					
-//					System.out.println(clientiSelezionati);
-//					
-//				}
-//            	
-//            });
-//
-//            return property;
-//        });
-//		
-//		colSelezionato.setEditable(true);
-//		tblClienti.setEditable(true);
-//		
+		colSelezionato.setCellFactory(column -> new CheckBoxTableCell<>());
+		
+		colSelezionato.setCellValueFactory(cellData -> {
+            Cliente cellValue = cellData.getValue();
+            BooleanProperty property = cellValue.getSelezionato();
+
+            // Add listener to handler change
+//            property.addListener((observable, oldValue, newValue) -> cellValue.setSelezionato(newValue));
+            property.addListener(new ChangeListener<Boolean>(){
+            
+				@Override
+				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+					cellValue.setSelezionato(new SimpleBooleanProperty(cellValue.getSelezionato().getValue()));
+//					clientiSelezionati.add(cellValue);
+					System.out.println("Nuovo Valore Selezionato: " + cellValue.getSelezionato().getValue());
+					
+					if(cellValue.getSelezionato().getValue()) {
+						clientiSelezionati.add(cellValue);
+					}
+					
+					System.out.println(clientiSelezionati);
+					
+				}
+            	
+            });
+
+            return property;
+        });
+		
+		colSelezionato.setEditable(true);
+		tblClienti.setEditable(true);
+		
 	
+//####################################################################
 		
 		tblClienti.getItems().clear();
     		ArrayList<Cliente> clienti;
@@ -354,7 +357,7 @@ public class AutoscuolaController {
 					if(Cliente.getValue().getDataInvioLettera() == null) {
 						property.setValue("");
 					} else {
-						property.setValue(Cliente.getValue().getDataScadenza().format(DateTimeFormatter.ofPattern(DB_common.dataVisualizzata)));
+						property.setValue(Cliente.getValue().getDataInvioLettera().format(DateTimeFormatter.ofPattern(DB_common.dataVisualizzata)));
 					}
 					return property;
 			});	
@@ -518,6 +521,8 @@ public class AutoscuolaController {
 		txtDataInvioLettera.setText( "" );
 		
     }
+    
+    //TODO 
     	
     private boolean validationCognomeRicerca() {
     	
@@ -626,11 +631,11 @@ public class AutoscuolaController {
     void initialize() {
     		
     		//Disabilito i pulsanti in fase di test
-    		btnSelezionaTutti.setDisable(true);
-    		btnSelezionaTutti.setVisible(false);
-    		btnCreaLettere.setDisable(true);
-    		btnCreaLettere.setVisible(false);
-    		colSelezionato.setVisible(false);
+//    		btnSelezionaTutti.setDisable(true);
+//    		btnSelezionaTutti.setVisible(false);
+//    		btnCreaLettere.setDisable(true);
+//    		btnCreaLettere.setVisible(false);
+    		//colSelezionato.setVisible(false);
     	
     		btnCercaCognomeSetDefault();
     		btnCercaMeseAnnoSetDefault();

@@ -1,5 +1,6 @@
 package it.tulchiar.autoscuola;
 	
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,37 +14,45 @@ public class Properties_Autoscuola{
 		
 		public static void main(String[] s) {
 			
-			//////saving properties into example.properties file/////////
-			try (OutputStream out = new FileOutputStream("properties")) {
-				Properties properties = new Properties();
-				properties.setProperty("dbConnectionString", "jdbc:mysql://localhost/autoscuola?user=root&password=");
-				properties.store(out, "Impostazioni per Autoscuola La Querce");
+			//////verifico se il file esiste//////
+			if(new File("properties").exists()) {
+				
+				System.out.println("Il file properties esiste già, ne recupero il contenuto");
+				
+				////////////Reading properties////////////////////////////////
+				try (InputStream in = new FileInputStream("properties")) {
+					Properties prop = new Properties();
+					prop.load(in);
+							
+					dbConnectionString = prop.getProperty("dbConnectionString");
 
-			} catch (IOException e) {
-				e.printStackTrace();
+					System.out.println("####Properties.stringPropertyNames usage####");
+					for (String property : prop.stringPropertyNames()) {
+						String value = prop.getProperty(property);
+						System.out.println(property + " ==> " + value);
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				////////////////////////////////////////////////////
+				
+			} else {
+				
+				System.out.println("Il file properties non esiste, lo creo con valori di default");
+					
+				//////saving properties into example.properties file/////////
+				try (OutputStream out = new FileOutputStream("properties")) {
+					Properties properties = new Properties();
+					properties.setProperty("dbConnectionString", "jdbc:mysql://localhost\\autoscuola?user=root&password=");
+					properties.store(out, "Impostazioni per Autoscuola La Querce");
+	
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				///////////////////////////////////////////////////////////////
 			}
-			///////////////////////////////////////////////////////////////
-
-			////////////Reading properties////////////////////////////////
-			try (InputStream in = new FileInputStream("properties")) {
-				Properties prop = new Properties();
-				prop.load(in);
-						
-				dbConnectionString = prop.getProperty("dbConnectionString");
-				System.out.println("dbConnectionString ==> " + dbConnectionString);
-
-//				System.out.println("####Properties.stringPropertyNames usage####");
-//				for (String property : prop.stringPropertyNames()) {
-//					String value = prop.getProperty(property);
-//					System.out.println(property + "=" + value);
-//				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			System.out.println();
-
-			////////////////////////////////////////////////////
+						System.out.println();
 
 //			/////////writing and reading fromxml////////////////
 //			try (OutputStream out = new FileOutputStream("example.xml")) {
