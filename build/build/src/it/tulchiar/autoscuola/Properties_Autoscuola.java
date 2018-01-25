@@ -45,7 +45,7 @@ public class Properties_Autoscuola{
 				try (OutputStream out = new FileOutputStream("properties")) {
 					Properties properties = new Properties();
 					properties.setProperty("dbConnectionString", "jdbc:mysql://localhost\\autoscuola?user=root&password=");
-					properties.store(out, "Impostazioni per Autoscuola La Querce");
+					properties.store(out, "Impostazioni per Autoscuola La Querce - Create");
 	
 				} catch (IOException e) {
 					e.printStackTrace();
