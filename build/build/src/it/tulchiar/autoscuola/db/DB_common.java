@@ -48,9 +48,9 @@ public class DB_common {
 			Connection conn = DriverManager.getConnection(dbConnectionString);	
 			return conn;
 		} catch (SQLException e) {
-			Alert alert = new Alert(AlertType.ERROR, "Errore di connessione con il database, verificare la connessione alla rete"
+			Alert alert = new Alert(AlertType.ERROR, "Errore di connessione con il database, verificare la connessione alla rete "
 					+ "e  che il server database sia avviato."
-					+ "Connection String: " + dbConnectionString, ButtonType.OK);
+					+ "\nConnection String: " + dbConnectionString, ButtonType.OK);
 			alert.show();
 			e.printStackTrace();
 		}
