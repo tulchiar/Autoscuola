@@ -1,10 +1,8 @@
 package it.tulchiar.autoscuola;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Properties;
 
 public class Common {
@@ -23,10 +21,10 @@ public class Common {
 	
 	}
 	//////////// Properties ///////////////////
-	public static String dbConnectionStringBuild = "";
-	public static String dbConnectionStringDev = "";
-	public static String letteraScadenzaPatente_WIN_PATH = "";
-	public static String letteraScadenzaPatente_OSX_PATH = "";
+//	public static String dbConnectionStringBuild = "";
+//	public static String dbConnectionStringDev = "";
+//	public static String letteraScadenzaPatente_WIN_PATH = "";
+//	public static String letteraScadenzaPatente_OSX_PATH = "";
 	
 	
 	//////////////////////////////////////////
@@ -52,14 +50,14 @@ public class Common {
 			Properties prop = new Properties();
 			prop.load(in);
 					
-			dbConnectionStringBuild = prop.getProperty("dbConnectionStringBuild");
-			dbConnectionStringDev = prop.getProperty("dbConnectionStringDev");
-			letteraScadenzaPatente_WIN_PATH = prop.getProperty("letteraScadenzaPatente_WIN_PATH");
-			letteraScadenzaPatente_OSX_PATH = prop.getProperty("letteraScadenzaPatente_OSX_PATH");
-			System.out.println("dbConnectionStringBuild ==> " + dbConnectionStringBuild);
-			System.out.println("dbConnectionStringDev ==> " + dbConnectionStringDev);
-			System.out.println("letteraScadenzaPatente_WIN_PATH ==> " + letteraScadenzaPatente_WIN_PATH);
-			System.out.println("letteraScadenzaPatente_OSX_PATH ==> " + letteraScadenzaPatente_OSX_PATH);
+//			dbConnectionStringBuild = prop.getProperty("dbConnectionStringBuild");
+//			dbConnectionStringDev = prop.getProperty("dbConnectionStringDev");
+//			letteraScadenzaPatente_WIN_PATH = prop.getProperty("letteraScadenzaPatente_WIN_PATH");
+//			letteraScadenzaPatente_OSX_PATH = prop.getProperty("letteraScadenzaPatente_OSX_PATH");
+//			System.out.println("dbConnectionStringBuild ==> " + dbConnectionStringBuild);
+//			System.out.println("dbConnectionStringDev ==> " + dbConnectionStringDev);
+//			System.out.println("letteraScadenzaPatente_WIN_PATH ==> " + letteraScadenzaPatente_WIN_PATH);
+//			System.out.println("letteraScadenzaPatente_OSX_PATH ==> " + letteraScadenzaPatente_OSX_PATH);
 
 //			System.out.println("####Properties.stringPropertyNames usage####");
 //			for (String property : prop.stringPropertyNames()) {

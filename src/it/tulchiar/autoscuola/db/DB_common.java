@@ -10,6 +10,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 
 import it.tulchiar.autoscuola.Common;
+import it.tulchiar.autoscuola.Properties_Autoscuola;
 
 public class DB_common {
 
@@ -28,10 +29,10 @@ public class DB_common {
 		String dbConnectionStringDev = "";
 		
 		if(it.tulchiar.autoscuola.Common.isDevelopmentEnvironment()) {
-			dbConnectionStringDev = Common.dbConnectionStringDev;
+			dbConnectionStringDev = Properties_Autoscuola.dbConnectionStringDev;
 			return dbConnectionStringDev;
 		} else {
-			dbConnectionStringBuild = Common.dbConnectionStringBuild;
+			dbConnectionStringBuild = Properties_Autoscuola.dbConnectionStringBuild;
 			return dbConnectionStringBuild;
 		}
 	}
