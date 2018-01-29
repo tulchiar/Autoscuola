@@ -36,7 +36,7 @@ public class Common {
 		//////saving properties into example.properties file/////////
 		try (OutputStream out = new FileOutputStream("properties")) {
 			Properties properties = new Properties();
-			properties.setProperty("dbConnectionStringBuild", "jdbc:mysql://localhost/autoscuola?user=root&password=");
+			properties.setProperty("dbConnectionStringBuild", "jdbc:mysql:\\\\localhost\\autoscuola?user=root&password=");
 			properties.setProperty("dbConnectionStringDev", "jdbc:mysql://localhost/autoscuola?user=root&password=Chrmrc84a15");
 			properties.setProperty("letteraScadenzaPatente_WIN_PATH", "C:\\Autoscuola\\LettereScadenze\\");
 			properties.setProperty("letteraScadenzaPatente_OSX_PATH", "/Users/Marco/Desktop/Autoscuola/");
