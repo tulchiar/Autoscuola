@@ -40,7 +40,8 @@ public class Main extends Application {
 				alert.show();
 			}
 			
-			Common.loadProperties();
+			Properties_Autoscuola.main(null);
+//			Common.loadProperties();
 			
 		} catch(Exception e) {
 			e.printStackTrace();
