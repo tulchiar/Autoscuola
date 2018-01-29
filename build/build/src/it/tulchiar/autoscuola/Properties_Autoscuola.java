@@ -10,6 +10,10 @@ import java.util.Properties;
 
 public class Properties_Autoscuola{
 		
+	public static String dbConnectionStringBuild = "";
+	public static String dbConnectionStringDev = "";
+	public static String letteraScadenzaPatente_WIN_PATH = "";
+	public static String letteraScadenzaPatente_OSX_PATH = "";
 	public static String dbConnectionString = "";
 		
 		public static void main(String[] s) {
@@ -24,8 +28,16 @@ public class Properties_Autoscuola{
 					Properties prop = new Properties();
 					prop.load(in);
 							
-					dbConnectionString = prop.getProperty("dbConnectionString");
-
+//					dbConnectionString = prop.getProperty("dbConnectionString");
+					dbConnectionStringBuild = prop.getProperty("dbConnectionStringBuild");
+					dbConnectionStringDev = prop.getProperty("dbConnectionStringDev");
+					letteraScadenzaPatente_WIN_PATH = prop.getProperty("letteraScadenzaPatente_WIN_PATH");
+					letteraScadenzaPatente_OSX_PATH = prop.getProperty("letteraScadenzaPatente_OSX_PATH");
+					System.out.println("dbConnectionStringBuild ==> " + dbConnectionStringBuild);
+					System.out.println("dbConnectionStringDev ==> " + dbConnectionStringDev);
+					System.out.println("letteraScadenzaPatente_WIN_PATH ==> " + letteraScadenzaPatente_WIN_PATH);
+					System.out.println("letteraScadenzaPatente_OSX_PATH ==> " + letteraScadenzaPatente_OSX_PATH);
+					
 					System.out.println("####Properties.stringPropertyNames usage####");
 					for (String property : prop.stringPropertyNames()) {
 						String value = prop.getProperty(property);
@@ -45,7 +57,7 @@ public class Properties_Autoscuola{
 				try (OutputStream out = new FileOutputStream("properties")) {
 					Properties properties = new Properties();
 //					properties.setProperty("dbConnectionString", "jdbc:mysql://localhost\\autoscuola?user=root&password=");
-					properties.setProperty("dbConnectionStringBuild", "jdbc:mysql://localhost/autoscuola?user=root&password=");
+					properties.setProperty("dbConnectionStringBuild", "jdbc:mysql://localhost:3311/autoscuola?user=root&password=root");
 					properties.setProperty("dbConnectionStringDev", "jdbc:mysql://localhost/autoscuola?user=root&password=Chrmrc84a15");
 					properties.setProperty("letteraScadenzaPatente_WIN_PATH", "C:\\Autoscuola\\LettereScadenze\\");
 					properties.setProperty("letteraScadenzaPatente_OSX_PATH", "/Users/Marco/Desktop/Autoscuola/");

@@ -13,7 +13,7 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
-import it.tulchiar.autoscuola.Common;
+import it.tulchiar.autoscuola.Properties_Autoscuola;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -30,8 +30,8 @@ public class Lettera {
 
 //	final static String PATH ="/Users/Marco/Desktop/Autoscuola/";
 //	final static String PATH ="C:\\Autoscuola\\LettereScadenze\\";
-	System.out.println(Common.letteraScadenzaPatente_OSX_PATH);
-	System.out.println(Common.letteraScadenzaPatente_WIN_PATH);
+	System.out.println(Properties_Autoscuola.letteraScadenzaPatente_OSX_PATH);
+	System.out.println(Properties_Autoscuola.letteraScadenzaPatente_WIN_PATH);
 	
 	
 	}
