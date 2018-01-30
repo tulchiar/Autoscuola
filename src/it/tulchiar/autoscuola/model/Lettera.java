@@ -61,7 +61,7 @@ public class Lettera {
 		     
 //		      PDImageXObject pdImage = PDImageXObject.createFromFile("/Users/Marco/Desktop/Autoscuola/LogoSenzaScritte.gif", document);
 		      
-		      
+//TODO   impostare il percorso dell'immagine come proprietà, gestire più sistemi operativi		
 		      PDImageXObject pdImage = PDImageXObject.createFromFile("C:\\Autoscuola\\img\\LogoSenzaScritte.gif", document);
 		      contentStream.drawImage(pdImage, 20, 690);
 		      
