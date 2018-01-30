@@ -62,7 +62,7 @@ public class Lettera {
 //		      PDImageXObject pdImage = PDImageXObject.createFromFile("/Users/Marco/Desktop/Autoscuola/LogoSenzaScritte.gif", document);
 		      
 		      
-		      PDImageXObject pdImage = PDImageXObject.createFromFile("./img/LogoSenzaScritte.gif", document);
+		      PDImageXObject pdImage = PDImageXObject.createFromFile("C:/Autoscuola/img/LogoSenzaScritte.gif", document);
 		      contentStream.drawImage(pdImage, 20, 690);
 		      
 		      contentStream.beginText();
