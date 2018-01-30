@@ -631,11 +631,11 @@ public class AutoscuolaController {
     void initialize() {
     		
     		//Disabilito i pulsanti in fase di test
-//    		btnSelezionaTutti.setDisable(true);
-//    		btnSelezionaTutti.setVisible(false);
-//    		btnCreaLettere.setDisable(true);
-//    		btnCreaLettere.setVisible(false);
-    		//colSelezionato.setVisible(false);
+    		btnSelezionaTutti.setDisable(true);
+    		btnSelezionaTutti.setVisible(false);
+    		btnCreaLettere.setDisable(true);
+    		btnCreaLettere.setVisible(false);
+    		colSelezionato.setVisible(false);
     	
     		btnCercaCognomeSetDefault();
     		btnCercaMeseAnnoSetDefault();
