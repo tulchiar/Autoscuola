@@ -25,7 +25,7 @@ public class Lettera {
 	private String path;
 //	private String PATH;
 //	final static String PATH ="/Users/Marco/Desktop/Autoscuola/";
-	final static String PATH ="./LettereScdenza/";
+	final static String PATH = Properties_Autoscuola.letteraScadenzaPatente_WIN_PATH;
 	
 	public void initialize() {
 
