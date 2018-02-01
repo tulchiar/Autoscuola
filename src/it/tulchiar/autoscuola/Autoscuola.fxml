@@ -27,7 +27,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0">
                      <children>
-                        <BorderPane>
+                        <BorderPane prefHeight="640.0" prefWidth="905.0">
                            <center>
                               <VBox prefHeight="728.0" prefWidth="822.0" BorderPane.alignment="CENTER">
                                  <children>
@@ -61,7 +61,7 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding>
                                     </GridPane>
-                                    <TableView fx:id="tblClienti" maxWidth="821.0" onMouseClicked="#doMostraDettagli" prefHeight="400.0" prefWidth="821.0">
+                                    <TableView fx:id="tblClienti" maxWidth="821.0" onMouseClicked="#doMostraDettagli" prefHeight="308.0" prefWidth="821.0">
                                       <columns>
                                         <TableColumn fx:id="colCognome" prefWidth="186.0" text="Cognome" />
                                         <TableColumn fx:id="colNome" minWidth="0.0" prefWidth="174.0" text="Nome" />
