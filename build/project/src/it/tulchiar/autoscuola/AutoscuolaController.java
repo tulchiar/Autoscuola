@@ -37,6 +37,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 public class AutoscuolaController {
 	
@@ -179,6 +180,14 @@ public class AutoscuolaController {
     //TODO implementare il metodo doSelezionaTutti
     @FXML
     void doSelezionaTutti() {
+    		
+    }
+
+    
+    //TODO segnalare la modalità di creazione lettere
+    @FXML
+    void doCheckCreazioneLettere() {
+    		System.out.println("CHECKED");
     		
     }
     
@@ -684,6 +693,7 @@ public class AutoscuolaController {
 }
 
 //cancellato rimane visibile
+//TODO 
 //TODO date obbligatorie in modifica nuovo cliente
 //quando salvi deve resettare la pagina
 //ingrandire caratteri dettagli

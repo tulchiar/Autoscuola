@@ -19,26 +19,26 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane minHeight="600.0" minWidth="1060.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.tulchiar.autoscuola.AutoscuolaController">
-   <center>
-      <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+<BorderPane xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.tulchiar.autoscuola.AutoscuolaController">
+   <top>
+      <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="200.0" tabMaxWidth="200.0" BorderPane.alignment="CENTER">
         <tabs>
             <Tab fx:id="tabRicerca" text="Ricerca">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0">
                      <children>
                         <BorderPane>
                            <center>
-                              <VBox BorderPane.alignment="CENTER">
+                              <VBox prefHeight="728.0" prefWidth="822.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <GridPane hgap="5.0" vgap="5.0">
+                                    <GridPane hgap="5.0" prefHeight="75.0" prefWidth="767.0" vgap="5.0">
                                       <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="266.0" minWidth="10.0" prefWidth="255.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="10.0" prefWidth="86.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="9.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="266.0" minWidth="10.0" prefWidth="201.23760986328125" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="0.0" prefWidth="58.737579345703125" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="270.0" minWidth="0.0" prefWidth="52.922027587890625" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="398.0" minWidth="26.0191650390625" prefWidth="74.79080200195312" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="477.9808349609375" minWidth="10.0" prefWidth="154.77130126953125" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="10.0" prefWidth="243.72869873046875" />
                                       </columnConstraints>
                                       <rowConstraints>
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -48,12 +48,12 @@
                                           <Label text="Cognome" />
                                           <Label text="Mese" GridPane.columnIndex="2" />
                                           <Label text="Anno" GridPane.columnIndex="3" />
-                                          <TextField fx:id="txtCognomeRicerca" promptText="Premi cerca per mostrare tutti i clienti" GridPane.rowIndex="1" />
-                                          <TextField fx:id="txtMese" prefWidth="75.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                          <TextField fx:id="txtAnno" prefWidth="75.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                          <TextField fx:id="txtCognomeRicerca" prefWidth="100.0" promptText="Mostrare tutti i clienti" GridPane.rowIndex="1" />
+                                          <TextField fx:id="txtMese" prefHeight="27.0" prefWidth="80.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <TextField fx:id="txtAnno" prefWidth="20.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                           <Button fx:id="btnCercaMeseAnno" mnemonicParsing="false" onAction="#doCercaMeseAnno" text="Cerca" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                                           <Button fx:id="btnCercaCognome" mnemonicParsing="false" onAction="#doCercaCognome" text="Cerca" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <CheckBox fx:id="chkCreazioneLettere" mnemonicParsing="false" text="Creazione Lettere" GridPane.columnIndex="4" />
+                                          <CheckBox fx:id="chkCreazioneLettere" mnemonicParsing="false" onAction="#doCheckCreazioneLettere" text="Creazione Lettere" GridPane.columnIndex="4" />
                                           <Button fx:id="btnCreaLettere" mnemonicParsing="false" onAction="#doCreaLettere" text="Crea Lettere" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                                           <Button fx:id="btnSelezionaTutti" mnemonicParsing="false" onAction="#doSelezionaTutti" text="Seleziona tutti" GridPane.columnIndex="5" />
                                        </children>
@@ -61,7 +61,7 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding>
                                     </GridPane>
-                                    <TableView fx:id="tblClienti" onMouseClicked="#doMostraDettagli">
+                                    <TableView fx:id="tblClienti" maxWidth="821.0" onMouseClicked="#doMostraDettagli" prefHeight="400.0" prefWidth="821.0">
                                       <columns>
                                         <TableColumn fx:id="colCognome" prefWidth="186.0" text="Cognome" />
                                         <TableColumn fx:id="colNome" minWidth="0.0" prefWidth="174.0" text="Nome" />
@@ -71,12 +71,15 @@
                                           <TableColumn fx:id="colSelezionato" prefWidth="75.0" text="Sel." />
                                       </columns>
                                     </TableView>
-                                    <TextArea fx:id="txtDettagliCliente">
+                                    <TextArea fx:id="txtDettagliCliente" prefHeight="253.0" prefWidth="986.0">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
                                     </TextArea>
                                  </children>
+                                 <BorderPane.margin>
+                                    <Insets bottom="5.0" left="5.0" />
+                                 </BorderPane.margin>
                               </VBox>
                            </center>
                            <right>
@@ -199,5 +202,5 @@
             </Tab>
         </tabs>
       </TabPane>
-   </center>
+   </top>
 </BorderPane>
