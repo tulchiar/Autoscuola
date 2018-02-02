@@ -546,7 +546,7 @@ public class AutoscuolaController {
     private boolean validationCognomeRicerca() {
     	
     		ValidationSupport validationSupport = new ValidationSupport();
-    		validationSupport.registerValidator(txtCognomeRicerca, false, Validator.createRegexValidator("Cognome non iserito", "(([A-Za-z]?+\\s?)+)?", Severity.ERROR));
+    		validationSupport.registerValidator(txtCognomeRicerca, false, Validator.createRegexValidator("Cognome non iserito", "([A-Z]([a-zàèéìòù'/-]?+)+\\s?)+", Severity.ERROR));
     		
     		validationSupport.invalidProperty().addListener(new ChangeListener<Boolean>() {
 
@@ -588,7 +588,7 @@ public class AutoscuolaController {
     		ValidationSupport validationSupport = new ValidationSupport();
     		validationSupport.registerValidator(txtCognome, true, Validator.createRegexValidator("Cognome non inserito", "([A-Z]([a-zàèéìòù'/-]?+)+\\s?)+", Severity.ERROR));
     		validationSupport.registerValidator(txtNome, true, Validator.createRegexValidator("Nome non inserito", "([A-Z]([a-zàèéìòù'/-]?+)+\\s?)+", Severity.ERROR));
-    		validationSupport.registerValidator(txtIndirizzo, false, Validator.createRegexValidator("Indirizzo non inserito correttamente", "(^[A-Z][A-Za-z0-9àèéìòù'/-\\s.()//]+)?", Severity.ERROR));
+    		validationSupport.registerValidator(txtIndirizzo, false, Validator.createRegexValidator("Indirizzo non inserito correttamente", "(^[A-Z][A-Za-z0-9àèéìòù'/\\s.()//-]+)?", Severity.ERROR));
     		validationSupport.registerValidator(txtCap, false, Validator.createRegexValidator("Cap non corretto", "^([0-9]{5})?$", Severity.ERROR));
     		validationSupport.registerValidator(txtLocalita, false, Validator.createRegexValidator("Località non inserita correttamente", "(([A-Z]([a-z]?+)+\\s?)+)?", Severity.ERROR));
     		validationSupport.registerValidator(txtProvincia, false, Validator.createRegexValidator("Provincia non inserita correttamente Es. PO", "([A-Z][A-Z])?", Severity.ERROR));
