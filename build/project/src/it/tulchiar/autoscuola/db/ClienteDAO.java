@@ -228,8 +228,7 @@ public class ClienteDAO {
 	 * @return True se l'inserimento è andato a buon fine, False se fallito
 	 */
 	public boolean add(Cliente cliente) {
-		
-		String sql = "INSERT INTO `autoscuola`.`clienti` (`cognome`, `nome`, `indirizzo`, `cap`, `localita`, `provincia`,"
+			String sql = "INSERT INTO `autoscuola`.`clienti` (`cognome`, `nome`, `indirizzo`, `cap`, `localita`, `provincia`,"
 					+ " `tipoPatente`, `dataScadenza`, `telefono`, `cellulare`, `email`, `note`)"
 					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	

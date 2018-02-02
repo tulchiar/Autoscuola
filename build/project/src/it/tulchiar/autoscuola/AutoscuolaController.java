@@ -37,7 +37,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.BorderPane;
 
 public class AutoscuolaController {
 	
@@ -161,6 +161,9 @@ public class AutoscuolaController {
 
     @FXML // fx:id="tabRicerca"
     private Tab tabRicerca; // Value injected by FXMLLoader
+    
+    @FXML
+    private BorderPane tabRicercaInner;
 
     @FXML // fx:id="tabAggiungiModifica"
     private Tab tabAggiungiModifica; // Value injected by FXMLLoader
@@ -184,14 +187,21 @@ public class AutoscuolaController {
     }
 
     
-    //TODO segnalare la modalità di creazione lettere
+    // Cambio il colore della finestra per segnalare la modalità di creazione delle lettere
     @FXML
     void doCheckCreazioneLettere() {
-    		System.out.println("CHECKED");
-    		
-    }
+    		if (chkCreazioneLettere.isSelected()) {
+	    		tabRicercaInner.getStyleClass().add("custom");
+    		} else {
+	    		tabRicercaInner.getStyleClass().remove("custom");
+    		}
+    	}
     
     
+    /** Quando seleziono una riga visualizzo i dettagli e passo i valori alla schermata di modifica.
+    * Se selezionata la checkbox creo la lettera de l cliente su cui è stato fatto click.
+    * @param event MouseEvent
+    */
     @FXML
     void doMostraDettagli(MouseEvent event) {
 		clientiSelezionati = tblClienti.getSelectionModel().getSelectedItems();
@@ -576,9 +586,9 @@ public class AutoscuolaController {
     	private boolean validation() {
     	
     		ValidationSupport validationSupport = new ValidationSupport();
-    		validationSupport.registerValidator(txtCognome, true, Validator.createRegexValidator("Cognome non inserito", "([A-Z]([a-z]?+)+\\s?)+", Severity.ERROR));
-    		validationSupport.registerValidator(txtNome, true, Validator.createRegexValidator("Nome non inserito", "([A-Z]([a-z]?+)+\\s?)+", Severity.ERROR));
-    		validationSupport.registerValidator(txtIndirizzo, false, Validator.createRegexValidator("Indirizzo non inserito correttamente", "(^[A-Z][A-Za-z0-9\\s.()//]+)?", Severity.ERROR));
+    		validationSupport.registerValidator(txtCognome, true, Validator.createRegexValidator("Cognome non inserito", "([A-Z]([a-zàèéìòù'/-]?+)+\\s?)+", Severity.ERROR));
+    		validationSupport.registerValidator(txtNome, true, Validator.createRegexValidator("Nome non inserito", "([A-Z]([a-zàèéìòù'/-]?+)+\\s?)+", Severity.ERROR));
+    		validationSupport.registerValidator(txtIndirizzo, false, Validator.createRegexValidator("Indirizzo non inserito correttamente", "(^[A-Z][A-Za-z0-9àèéìòù'/-\\s.()//]+)?", Severity.ERROR));
     		validationSupport.registerValidator(txtCap, false, Validator.createRegexValidator("Cap non corretto", "^([0-9]{5})?$", Severity.ERROR));
     		validationSupport.registerValidator(txtLocalita, false, Validator.createRegexValidator("Località non inserita correttamente", "(([A-Z]([a-z]?+)+\\s?)+)?", Severity.ERROR));
     		validationSupport.registerValidator(txtProvincia, false, Validator.createRegexValidator("Provincia non inserita correttamente Es. PO", "([A-Z][A-Z])?", Severity.ERROR));
@@ -645,7 +655,7 @@ public class AutoscuolaController {
     		btnCreaLettere.setDisable(true);
     		btnCreaLettere.setVisible(false);
     		colSelezionato.setVisible(false);
-    	
+    		
     		btnCercaCognomeSetDefault();
     		btnCercaMeseAnnoSetDefault();
     		validationCognomeRicerca();
@@ -655,6 +665,7 @@ public class AutoscuolaController {
     		
     		assert tabPane != null : "fx:id=\"tabPane\" was not injected: check your FXML file 'Autoscuola.fxml'.";
     		assert tabRicerca != null : "fx:id=\"tabRicerca\" was not injected: check your FXML file 'Autoscuola.fxml'.";
+    		assert tabRicercaInner != null : "fx:id=\"tabRicercaInner\" was not injected: check your FXML file 'Autoscuola.fxml'.";
     		assert tabAggiungiModifica != null : "fx:id=\"tabAggiungiModifica\" was not injected: check your FXML file 'Autoscuola.fxml'.";
     		assert chkCreazioneLettere != null : "fx:id=\"chkCreazioneLettere\" was not injected: check your FXML file 'Autoscuola.fxml'.";
         assert txtAnno != null : "fx:id=\"txtAnno\" was not injected: check your FXML file 'Autoscuola.fxml'.";
@@ -693,7 +704,6 @@ public class AutoscuolaController {
 }
 
 //cancellato rimane visibile
-//TODO 
 //TODO date obbligatorie in modifica nuovo cliente
 //quando salvi deve resettare la pagina
 //ingrandire caratteri dettagli

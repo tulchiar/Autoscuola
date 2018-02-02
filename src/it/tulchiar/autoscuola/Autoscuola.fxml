@@ -27,7 +27,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0">
                      <children>
-                        <BorderPane prefHeight="640.0" prefWidth="905.0">
+                        <BorderPane fx:id="tabRicercaInner" prefHeight="640.0" prefWidth="905.0">
                            <center>
                               <VBox prefHeight="728.0" prefWidth="822.0" BorderPane.alignment="CENTER">
                                  <children>
@@ -60,8 +60,11 @@
                                        <padding>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding>
+                                       <VBox.margin>
+                                          <Insets left="5.0" />
+                                       </VBox.margin>
                                     </GridPane>
-                                    <TableView fx:id="tblClienti" maxWidth="821.0" onMouseClicked="#doMostraDettagli" prefHeight="308.0" prefWidth="821.0">
+                                    <TableView fx:id="tblClienti" maxWidth="821.0" onMouseClicked="#doMostraDettagli" prefHeight="270.0" prefWidth="821.0">
                                       <columns>
                                         <TableColumn fx:id="colCognome" prefWidth="186.0" text="Cognome" />
                                         <TableColumn fx:id="colNome" minWidth="0.0" prefWidth="174.0" text="Nome" />
@@ -70,11 +73,17 @@
                                           <TableColumn fx:id="colDataInvioLettera" prefWidth="91.0" text="Invio Lettera" />
                                           <TableColumn fx:id="colSelezionato" prefWidth="75.0" text="Sel." />
                                       </columns>
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" />
+                                       </VBox.margin>
                                     </TableView>
-                                    <TextArea fx:id="txtDettagliCliente" prefHeight="253.0" prefWidth="986.0">
+                                    <TextArea fx:id="txtDettagliCliente">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" />
+                                       </VBox.margin>
                                     </TextArea>
                                  </children>
                                  <BorderPane.margin>
