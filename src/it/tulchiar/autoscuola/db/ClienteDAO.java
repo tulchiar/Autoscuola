@@ -168,7 +168,8 @@ public class ClienteDAO {
 						  + "dataScadenza, telefono, cellulare, email, note, dataInvioLettera "
 				   + "FROM autoscuola.clienti "
 				   + "WHERE dataScadenza  >= ?" //'20171201' 
-				   + "AND dataScadenza < ?;";
+				   + "AND dataScadenza < ?"
+				   + "AND cancellato IS NULL;";
 		
 		Connection conn = DB_common.getConnection();
 		
