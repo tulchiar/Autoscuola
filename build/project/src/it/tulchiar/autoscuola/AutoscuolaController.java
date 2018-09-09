@@ -566,7 +566,7 @@ public class AutoscuolaController {
     private boolean validationDataRicerca() {
        	
     		ValidationSupport validationSupport = new ValidationSupport();
-		validationSupport.registerValidator(txtMese, false, Validator.createRegexValidator("Mese non valido", "([0][0-9])|([1][1-2])", Severity.ERROR));
+		validationSupport.registerValidator(txtMese, false, Validator.createRegexValidator("Mese non valido", "([0][0-9])|([1][0-2])", Severity.ERROR));
 		validationSupport.registerValidator(txtAnno, false, Validator.createRegexValidator("Anno non valido (1990-2059)", "([1][9][9][0-9]|[2][0][0-5][0-9])", Severity.ERROR));
 	
 		validationSupport.invalidProperty().addListener(new ChangeListener<Boolean>() {
